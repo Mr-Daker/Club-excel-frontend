@@ -86,7 +86,7 @@ const Register = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body:JSON.stringify(data),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -94,7 +94,6 @@ const Register = () => {
         throw new Error(errorData.error || "Something went wrong");
       }
 
-      console.log("✅ Saved to MongoDB");
       onOpenModal();
       notifysuccess();
 
@@ -125,6 +124,9 @@ const Register = () => {
     }
   };
 
+  if (!isLoaded) {
+    return null;
+  }
   return (
     <>
       <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center bg-black text-white px-6 py-10">
@@ -140,7 +142,7 @@ const Register = () => {
         {/* Content Section */}
         <div className="container mx-auto flex flex-col md:flex-row gap-8 mt-10 w-full">
           {/* Left Section - Event Info */}
-          <div className="bg-[#693B14] text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
+          <div className="border border-dashed border-blue-500 shadow-blue-300 text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
             <h2 className="text-xl font-bold text-orange-400">
               Code Crusade – The Ultimate Coding Battle!
             </h2>
@@ -154,9 +156,9 @@ const Register = () => {
                 Group1 is only for 1st year and Group2 is for both 1st and 2nd
                 year and group3 is open for all year
               </div>
-              <span className="font-semibold">🔹 Date:</span> Feb 28
+              <span className="font-semibold">🔹 Date:</span> Nov 6th
               <br />
-              <span className="font-semibold">🔹 Time:</span> 10:30 AM - 4:00 PM
+              <span className="font-semibold">🔹 Time:</span> 10:00 AM - 4:00 PM
               <br />
               <span className="font-semibold">🔹 Venue:</span> Atrium CC
               <br />
@@ -335,7 +337,7 @@ const Register = () => {
 
               <button
                 type="submit"
-                className="w-full bg-orange-500 text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition-all duration-300 mt-4"
+                className="w-full bg-blue-500 text-white py-3 rounded-lg font-bold hover:bg-blue-300 transition-all duration-300 mt-4"
               >
                 Submit
               </button>
@@ -411,7 +413,7 @@ const Register = () => {
         pauseOnHover
         theme="dark"
       />
-      {!isLoaded ? <Loader /> : ""}
+      {/* {!isLoaded ? <Loader /> : ""} */}
     </>
   );
 };

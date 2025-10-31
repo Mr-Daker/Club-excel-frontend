@@ -12,27 +12,27 @@ const upcomingEvents = [
     id: 1,
     title: "Code Crusade 4.0",
     date: "2025-11-6",
-    time: "9:00am to 4:00pm",
+    time: "10:00am to 4:00pm",
     location: "ATRIUM CC",
     description:
       "Join us for the fourth edition of Code Crusade, a competitive coding event where participants solve challenging problems to win exciting prizes and showcase their coding skills.",
     image:
       "https://raw.githubusercontent.com/anshukumarbth/clubExcelImage/main/CodeCrusade.png",
-    attendees: "NO Limite",
+    attendees: "NO Limits",
     category: "Coding Competition",
     reg: "/code-crusade-register",
   },
   {
     id: 2,
     title: "Cipher Chase",
-    date: "2025-11-6",
-    time: "9:00am to 4:00pm",
+    date: "2025-11-7",
+    time: "10:00am to 4:00pm",
     location: "ATRIUM Room no. 205",
     description:
       "Embark on a thrilling journey of cryptography and problem-solving in Cipher Chase. Decode puzzles, crack codes, and race against the clock",
     image:
       "https://raw.githubusercontent.com/anshukumarbth/clubExcelImage/main/CipherChase.png",
-    attendees: "NO Limite",
+    attendees: "NO Limits",
     category: "Fun Event",
     reg: "/cipher-chase-register",
   },
@@ -76,19 +76,22 @@ const Sankalp2025 = () => {
 
         {/* header image (smaller now) */}
         <motion.div
-          
           className="p-6 transition-all duration-500"
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.08 }}
           transition={{ duration: 0.6, delay: 1 * 0.2 }}
         >
-          <img src="/components/Short_Logo.jpg" alt="logo" className="w-[100%] ml-auto mr-auto " />
+          <img
+            src="/components/Short_Logo.jpg"
+            alt="logo"
+            className="w-[100%] ml-auto mr-auto "
+          />
         </motion.div>
 
         {/* headline */}
         <motion.h1
-          className="text-center text-4xl md:text-4xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-red-500 to-pink-500"
+          className="text-center text-4xl md:text-4xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-pink-300 to-rose-400"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
@@ -98,13 +101,13 @@ const Sankalp2025 = () => {
 
         {/* sub-text */}
         <motion.p
-          className="text-gray-400 text-center mt-5 max-w-2xl text-lg leading-relaxed"
+          className="text-white text-center mt-5 max-w-2xl text-lg leading-relaxed font-extrabold font-serif"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2, delay: 0.2 }}
         >
           Club Excel presents{" "}
-          <span className="text-orange-400">Sankalp 2025</span> — a fusion of
+          <span className="text-blue-400">Sankalp 2025-26</span> — a fusion of
           coding, creativity &amp; competition. Experience challenges that push
           your limits.
         </motion.p>
@@ -112,7 +115,7 @@ const Sankalp2025 = () => {
         {/* logos */}
         <div className="relative z-10 mt-14 flex flex-wrap justify-center items-center gap-12">
           {[
-            "/components/sankalplogo.png",
+            "/sankalplogo1.png",
             "/components/clublogo.gif",
             "/sankalplogo12.png",
           ].map((src, i) => (
@@ -137,16 +140,14 @@ const Sankalp2025 = () => {
         ></div>
         <div className="flex flex-row  gap-40  max-sm:flex-col max-sm:gap-1 ">
           <p className="text-[20px] font-extrabold md:text-6xl mt-12">
-            <span style={{ color: "#f88e43" }}>SANKALP</span> 2025-26
+            <span className="text-green-400">SANKALP</span> 2025-26
           </p>
         </div>
 
         <h2 className="text-6xl font-bold md:text-8xl">
           <div className="w-full flex flex-row max-sm:flex-col">
             <span className="lg:text-[200px]">BIGGEST</span>
-            <span style={{ color: "#F88E43" }} className="lg:text-[200px]">
-              EVENT
-            </span>
+            <span className="lg:text-[200px] text-green-400">EVENT</span>
           </div>
         </h2>
 
@@ -207,19 +208,9 @@ const Sankalp2025 = () => {
             </p>
           </motion.div>
 
-          <div ref={upcomingRef} className="mb-20">
-            <motion.h2
-              initial={{ opacity: 0, x: -50 }}
-              animate={
-                upcomingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }
-              }
-              transition={{ duration: 0.8 }}
-              className="text-3xl md:text-4xl font-bold mb-8"
-            >
-              Upcoming Events
-            </motion.h2>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 ">
+          <div ref={upcomingRef} className="w-full">
+            {/* <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center"> */}
+            <div className="flex gap-8 flex-col md:flex-row ml-auto mr-auto justify-center">
               {upcomingEvents.map((event, index) => (
                 <motion.div
                   key={event.id}
@@ -229,7 +220,7 @@ const Sankalp2025 = () => {
                   transition={{ delay: index * 0.1 }}
                   className="group"
                 >
-                  <div className="h-full rounded-3xl overflow-hidden bg-card border border-border hover:border-blue-500/40 transition-all duration-300 shadow-lg shadow-blue-200">
+                  <div className="h-full rounded-3xl max-w-lg overflow-hidden bg-card border border-border hover:border-blue-500/40 transition-all duration-300 shadow-lg shadow-blue-200 ">
                     <div className="relative aspect-[9.5/9] m-2 overflow-hidden">
                       <Image
                         src={event.image}
@@ -279,7 +270,7 @@ const Sankalp2025 = () => {
                         prefetch={true}
                       >
                         <Button
-                          className="w-full group/btn bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                          className="w-full group/btn bg-blue-500 rounded-xl hover:bg-cyan-400 font-extrabold font-serif hover:text-black text-lg"
                           onClick={(e) => {
                             setIsLoading(true);
                           }}

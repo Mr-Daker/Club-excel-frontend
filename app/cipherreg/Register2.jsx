@@ -92,7 +92,7 @@ const Register = () => {
         </div>
 
         <div className="container mx-auto flex flex-col md:flex-row gap-8 mt-10 w-full">
-          <div className="bg-[#693B14] text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
+          <div className="border border-dashed border-blue-500 shadow-blue-300 text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
             <h2 className="text-xl font-bold text-orange-400">
               CipherChase : The Ultimate Hunt!
             </h2>
@@ -101,9 +101,9 @@ const Register = () => {
 
               <br />
 
-              <strong>🔹 Date:</strong> March 1
+              <strong>🔹 Date:</strong> Nov 7th
               <br />
-              <strong>🔹 Time:</strong> 10:30 AM - 4:00 PM (as per rounds)
+              <strong>🔹 Time:</strong> 10:00 AM - 4:00 PM (as per rounds)
               <br />
               <strong>🔹 Venue:</strong> ATR 205
               <br />
