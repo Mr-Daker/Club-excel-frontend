@@ -61,7 +61,6 @@ const upcomingEvents = [
 const EventHero = () => {
   return (
     <div className="bg-gradient-to-br from-gray-950 to-gray-900 min-h-screen">
-      {/* Hero Section */}
       <section
         id="hero"
         className="relative h-screen bg-black overflow-hidden text-white flex items-center justify-center"
@@ -72,27 +71,52 @@ const EventHero = () => {
           <div className={styles.smokeLayer}></div>
         </div>
 
-        <div className="text-center px-4 w-full z-10 relative">
-          <p className="text-lg md:text-xl font-semibold text-orange-500 mb-3 uppercase tracking-widest font-michroma">
-            Club Excel Presents
-          </p>
+        <div className="text-center px-4 w-full z-10 relative max-sm:flex max-sm:flex-col max-sm:justify-between max-sm:h-full max-sm:py-20">
+          {/* Club Excel Logo - Shows on top for mobile only */}
+          <div className="hidden max-sm:flex max-sm:justify-center max-sm:items-end max-sm:order-1 ">
+            <Image
+              src="/components/clublogo.gif"
+              alt="Club Logo"
+              width={100}
+              height={100}
+              className="w-28 h-28 max-sm:w-36 max-sm:h-36"
+            />
+          </div>
 
-          <h1 className="text-6xl sm:text-8xl lg:text-9xl font-extrabold leading-tight mb-4">
-            SANKALP
-            <span className="text-orange-500 inline-block font-michroma text:3xl lg:text-6xl">
-              2025
-            </span>
-          </h1>
+          {/* Main Content */}
+          <div className="max-sm:order-2 max-sm:flex-1 max-sm:flex max-sm:flex-col max-sm:justify-center">
+            <p className="text-lg md:text-xl font-semibold text-orange-500 mb-3 uppercase tracking-widest font-michroma max-sm:text-base">
+              Club Excel Presents
+            </p>
 
-          <p className="text-xl md:text-3xl font-semibold text-white mt-6 tracking-wide max-w-5xl mx-auto ">
-            The Premier Techno-Management Symposium
-          </p>
+            <h1 className="text-6xl sm:text-8xl lg:text-9xl font-extrabold leading-tight mb-4 max-sm:text-7xl max-sm:mb-5">
+              SANKALP
+              <span className="text-orange-500 inline-block font-michroma text:3xl lg:text-6xl max-sm:font-bold max-sm:block max-sm:text-5xl max-sm:mt-3">
+                2025
+              </span>
+            </h1>
 
-          <p className="text-sm md:text-lg text-gray-400 mt-4 max-w-3xl mx-auto ">
-            Where Code Meets Fun – Club Excel Rocks
-          </p>
+            <p className="text-xl md:text-3xl font-semibold text-white mt-6 tracking-wide max-w-5xl mx-auto max-sm:text-xl max-sm:mt-6 max-sm:leading-relaxed">
+              The Premier Techno-Management Symposium
+            </p>
+            <p className="text-sm md:text-lg text-gray-400 mt-4 max-w-3xl mx-auto max-sm:text-sm max-sm:mt-4">
+              Where Code Meets Fun – Club Excel Rocks
+            </p>
+          </div>
 
-          <div className="w-full flex items-center justify-center pt-5">
+          {/* Sankalp Logo - Shows on bottom for mobile only */}
+          <div className="hidden max-sm:flex max-sm:justify-center max-sm:items-center max-sm:order-3">
+            <Image
+              src="/event/sankalp2025.png"
+              alt="sankalp Logo"
+              width={100}
+              height={100}
+              className="w-28 h-28 animate-spin-slow max-sm:w-36 max-sm:h-36"
+            />
+          </div>
+
+          {/* Both Logos Side by Side - Shows for bigger devices only */}
+          <div className="w-full flex gap-2 items-center justify-center pt-5 max-sm:hidden">
             <Image
               src="/components/clublogo.gif"
               alt="Club Logo"

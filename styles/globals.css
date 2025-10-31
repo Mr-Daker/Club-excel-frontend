@@ -376,7 +376,7 @@ a {
 }
 
 .animate-spin-slow {
-  animation: spin-slow 8s linear infinite;
+  animation: spin-slow 10s linear infinite;
 }
 .font-michroma {
   font-family: "Michroma", sans-serif;
