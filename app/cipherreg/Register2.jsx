@@ -1,168 +1,131 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+"use client"
+import React, { useState } from "react";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../Common/loder";
+import Loader from "@/components/Common/loder";
+
 const Register = () => {
   const [data, setData] = useState({
     name: "",
     phone: "",
-    email: "",
-    rollNumber: "",
+    rollNo: "",
     hostelLocal: "",
-    groupName: "",
-    hackId: "",
-    instituteEmail: "", // New field for institute email
+    email: "",
   });
+  const [isLoaded, setIsLoaded] = useState(true);
 
   const notify = (e) => toast.error(e);
   const notifysuccess = () => toast.success("yeeh! Registration Successs.");
-  const [isLoaded, setIsLoaded] = useState(true);
-  const [group, setGroup] = useState([]);
-  const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
-  const [instituteEmailError, setInstituteEmailError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [open, setOpen] = useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
-  useEffect(() => {
-    if (data.rollNumber) {
-      const sub = data.rollNumber.substring(0, 4);
-
-      if (sub === "2024") {
-        setGroup(["Group 1", "Group 2", "Group 3"]);
-      } else if (sub === "2023") {
-        setGroup(["Group 2", "Group 3"]);
-      } else if (sub === "2022") {
-        setGroup(["Group 3"]);
-      } else if (sub === "2021") {
-        setGroup(["Group 3"]);
-      }
-    } else {
-      setGroup([]);
-    }
-  }, [data.rollNumber]);
-
-  const validateEmail = (email) => {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (!emailPattern.test(email)) {
-      setEmailError("Invalid email format");
-    } else {
-      setEmailError("");
-    }
-  };
 
   const validatePhone = (phone) => {
     const phonePattern = /^[6-9]\d{9}$/;
     if (!phonePattern.test(phone)) {
-      setPhoneError("Enter a valid 10-digit phone number");
+      setPhoneError("Enter a valid 10-digit phone number starting with 6-9");
     } else {
       setPhoneError("");
     }
   };
 
-  const validateInstituteEmail = (email) => {
-    if (!email.includes(".edu")) {
-      setInstituteEmailError("Institute email must contain '.edu'");
+  const validateEmail = (email) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(email)) {
+      setEmailError("Enter a valid email address");
     } else {
-      setInstituteEmailError("");
+      setEmailError("");
     }
   };
 
-  const submitFormData = async (data) => {
-    setIsLoaded(false);
-
-    const url = "https://club-excel-backend.vercel.app";
-    // const url = "http://localhost:8000";
-    try {
-      const response = await axios.post(`${url}/api/code-crusade-3.0`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data,
-      });
-
-      console.log(response);
-      onOpenModal();
-      notifysuccess();
-      setData({
-        name: "",
-        phone: "",
-        email: "",
-        rollNumber: "",
-        hostelLocal: "",
-        groupName: "",
-        hackId: "",
-        instituteEmail: "",
-      });
-    } catch (error) {
-      notify(error.response.data.message || "some error occured");
-    } finally {
-      setIsLoaded(true);
-    }
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (emailError || phoneError || instituteEmailError) {
+    if (phoneError || emailError) {
       alert("Please correct the errors before submitting.");
     } else {
-      // Send data to the backend
       submitFormData(data);
     }
   };
 
+  // const submitFormData = async (data) => {
+  //   setIsLoaded(false);
+
+  //   const url = "https://club-excel-backend.vercel.app";
+  //   // const url = "http://localhost:8000";
+  //   try {
+  //     const response = await axios.post(`${url}/api/showdown`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       data,
+  //     });
+  //   console.log("✅ Saved to MongoDB + Airtable");
+  //   onOpenModal();
+  //   notifysuccess();
+
+  //     onOpenModal();
+  //     notifysuccess();
+  //     setData({
+  //       name: "",
+  //       phone: "",
+  //       rollNo: "",
+  //       hostelLocal: "",
+  //       email: "",
+  //     });
+  //   } catch (error) {
+  //     notify(error?.response?.data?.message || "some error occured");
+  //   } finally {
+  //     setIsLoaded(true);
+  //   }
+  // };
+
   return (
     <>
-      <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center bg-black text-white px-6 py-10">
-        {/* Header Image */}
+      <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center  text-white px-6 py-10">
         <div className="w-full flex justify-center">
           <img
-            src="/components/Group 16.png"
+            src="/ciperchase.png"
             alt="Code Crusade 3.0"
             className="max-w-full md:w-2/3 lg:w-1/2 h-auto mx-auto"
           />
         </div>
 
-        {/* Content Section */}
         <div className="container mx-auto flex flex-col md:flex-row gap-8 mt-10 w-full">
-          {/* Left Section - Event Info */}
           <div className="bg-[#693B14] text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
             <h2 className="text-xl font-bold text-orange-400">
-              Code Crusade – The Ultimate Coding Battle!
+              CipherChase : The Ultimate Hunt!
             </h2>
             <p className="mt-2 text-gray-300">
-              💡 Think. Code. Conquer. Join us for an intense coding competition
-              designed to challenge your problem-solving skills and logical
-              thinking. Compete with the best minds and prove your coding
-              prowess!
+              Game, Think & Race! Dive into a thrilling non-technical fest where your gaming reflexes, wit, and puzzle-solving instincts will help you top the leaderboard.
+
               <br />
-              <div className="font-semibold text-blue-500">
-                Group1 is only for 1st year and Group2 is for both 1st and 2nd
-                year and group3 is open for all year
-              </div>
-              <span className="font-semibold">🔹 Date:</span> Feb 28
+         
+              <strong>🔹 Date:</strong> March 1
               <br />
-              <span className="font-semibold">🔹 Time:</span> 10:30 AM - 4:00 PM
+              <strong>🔹 Time:</strong> 10:30 AM - 4:00 PM (as per rounds)
               <br />
-              <span className="font-semibold">🔹 Venue:</span> Atrium CC
+              <strong>🔹 Venue:</strong> ATR 205
               <br />
-              <span className="font-semibold">🔹 Rounds:</span>
+              <strong>🔹 Rounds:</strong>
               <br />
-              <span className="font-semibold">Round 1:</span> Quiz Round – Test
-              your programming knowledge.
+              <strong>Round 1:</strong> Single-Player Games – Survive and advance!
+
               <br />
-              <span className="font-semibold">Round 2:</span> Coding Round –
-              Solve challenging problems within the time limit.
+              <strong>Round 2:</strong> Buzzer Battle – Be among the fastest to make the finals!
+
+              <br />
+              <strong>Round 3:</strong> The Ultimate Hunt ✨ 
+
             </p>
-            <a href="/showdown" className="font-bold underline">
-              CTRL + WIN showdown
+            <a href="/code-crusade-register" className="font-bold underline">
+              CODE CRUSADE 4.0
             </a>
           </div>
 
-          {/* Right Section - Registration Form */}
           <div className="bg-white text-black p-6 rounded-lg shadow-lg w-full md:w-2/3">
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
@@ -210,7 +173,7 @@ const Register = () => {
                     id="email"
                     type="email"
                     value={data.email}
-                    placeholder="Enter your email"
+                    placeholder="youremail@gmail.com"
                     className="w-full p-3 border rounded-lg bg-gray-100"
                     onChange={(e) => {
                       setData({ ...data, email: e.target.value });
@@ -224,60 +187,17 @@ const Register = () => {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="instituteEmail"
-                    className="block font-semibold"
-                  >
-                    Institute Email
-                  </label>
-                  <input
-                    id="instituteEmail"
-                    type="email"
-                    value={data.instituteEmail}
-                    placeholder="Enter your institute email"
-                    className="w-full p-3 border rounded-lg bg-gray-100"
-                    onChange={(e) => {
-                      setData({ ...data, instituteEmail: e.target.value });
-                      validateInstituteEmail(e.target.value);
-                    }}
-                    required
-                  />
-                  {instituteEmailError && (
-                    <p className="text-red-500 text-sm">
-                      {instituteEmailError}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="rollNumber" className="block font-semibold">
+                  <label htmlFor="rollNo" className="block font-semibold">
                     Roll Number
                   </label>
                   <input
-                    id="rollNumber"
+                    id="rollNo"
                     type="text"
-                    value={data.rollNumber}
+                    value={data.rollNo}
                     placeholder="Enter Roll Number"
                     className="w-full p-3 border rounded-lg bg-gray-100"
                     onChange={(e) =>
-                      setData({ ...data, rollNumber: e.target.value })
-                    }
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="hackId" className="block font-semibold">
-                    HackerRank Id
-                  </label>
-                  <input
-                    id="hackId"
-                    type="text"
-                    value={data.hackId}
-                    placeholder="Enter HackerRank Id"
-                    className="w-full p-3 border rounded-lg bg-gray-100"
-                    onChange={(e) =>
-                      setData({ ...data, hackId: e.target.value })
+                      setData({ ...data, rollNo: e.target.value })
                     }
                     required
                   />
@@ -289,6 +209,7 @@ const Register = () => {
                   </label>
                   <select
                     id="hostelLocal"
+                    value={data.hostelLocal}
                     className="w-full p-3 border rounded-lg bg-gray-100"
                     onChange={(e) =>
                       setData({ ...data, hostelLocal: e.target.value })
@@ -298,26 +219,6 @@ const Register = () => {
                     <option value="">Select</option>
                     <option value="hostelite">Hostelite</option>
                     <option value="localite">Localite</option>
-                  </select>
-                </div>
-
-                {/* Group */}
-                <div>
-                  <label htmlFor="groupName" className="block font-semibold">
-                    Group
-                  </label>
-                  <select
-                    id="groupName"
-                    className="w-full p-3 border rounded-lg bg-gray-100"
-                    onChange={(e) =>
-                      setData({ ...data, groupName: e.target.value })
-                    }
-                    required
-                  >
-                    <option value="">Select</option>
-                    {group.map((option, index) => (
-                      <option key={index}>{option}</option>
-                    ))}
                   </select>
                 </div>
               </div>
@@ -332,6 +233,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+
       <Modal open={open} onClose={onCloseModal} center>
         <div
           className="Main-modal"
@@ -371,7 +273,7 @@ const Register = () => {
           <div
             className="Link-msg"
             onClick={() =>
-              window.open("https://chat.whatsapp.com/KVsMbjTSbUs2Kqg9Wt45d8 ")
+              window.open("https://chat.whatsapp.com/LHFaxn2T6OZHBhv1F01edd ")
             }
             style={{
               color: "violet",
@@ -383,7 +285,7 @@ const Register = () => {
           >
             https://chat.whatsapp.com/
             <br />
-            KVsMbjTSbUs2Kqg9Wt45d8
+            LHFaxn2T6OZHBhv1F01edd
           </div>
         </div>
       </Modal>

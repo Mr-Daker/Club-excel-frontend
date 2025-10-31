@@ -1,4 +1,4 @@
-import Register from '@/components/sankalp/Register'
+import Register from '@/app/codecrusadereg/Register'
 import React from 'react'
 
 const sankalp = () => {
