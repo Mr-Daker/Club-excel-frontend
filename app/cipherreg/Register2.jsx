@@ -1,4 +1,3 @@
-"use client"
 import React, { useState } from "react";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
@@ -54,22 +53,19 @@ const Register = () => {
 
   const submitFormData = async (data) => {
     setIsLoaded(false);
-
-    // const url = "https://club-excel-backend.vercel.app";
-    // const url = "http://localhost:8000";
     try {
-      const response = await fetch(`/api/cipherreg`, {
-        method: "POST",
+      const response = await fetch('/api/cipherreg', {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body:JSON.stringify(data),
       });
-      console.log("✅ Saved to MongoDB + Airtable");
-      console.log(await response.json())
+      console.log(await response.json( ))    
+    onOpenModal();
+    notifysuccess();
+
       onOpenModal();
       notifysuccess();
-
       setData({
         name: "",
         phone: "",
@@ -78,8 +74,8 @@ const Register = () => {
         email: "",
       });
     } catch (error) {
-      console.error("some error occured while sending the response", error)
-      notify(error.message || "some error occured");
+      notify(error?.response?.data?.message || "some error occured");
+      console.log(error)
     } finally {
       setIsLoaded(true);
     }
@@ -87,7 +83,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center  text-white px-6 py-10">
+      <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center bg-black  text-white px-6 py-10">
         <div className="w-full flex justify-center">
           <img
             src="/ciperchase.png"
@@ -123,9 +119,9 @@ const Register = () => {
               <strong>Round 3:</strong> The Ultimate Hunt ✨
 
             </p>
-            <Link href="/code-crusade-register" className="font-bold underline">
-              CODE CRUSADE 4.0
-            </Link>
+            <a href="/code-crusade-register" className="font-bold underline">
+              Our Other Event: CODE CRUSADE 4.0
+            </a>
           </div>
 
           <div className="bg-white text-black p-6 rounded-lg shadow-lg w-full md:w-2/3">

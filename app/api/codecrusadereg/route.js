@@ -3,13 +3,16 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 export async function POST(req) {
+
+  console.log(req.body)
+
   try {
     const client = await clientPromise;
     const body = await req.json();
     console.log("Received body:", body);
     const db = client.db("clubexcel");
-    const contacts = db.collection("codecrusade")
-
+    const contacts = db.collection("codecrusade");
+    
     const result = await contacts.insertOne({
       ...body,
       timestamp: new Date(),
