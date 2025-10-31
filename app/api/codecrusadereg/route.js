@@ -8,7 +8,8 @@ export async function POST(req) {
     const body = await req.json();
     console.log("Received body:", body);
     const db = client.db("clubexcel");
-    
+    const contacts = db.collection("codecrusade")
+
     const result = await contacts.insertOne({
       ...body,
       timestamp: new Date(),

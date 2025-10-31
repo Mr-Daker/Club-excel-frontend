@@ -4,6 +4,7 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 import Loader from "@/components/Common/loder";
 
 const Register = () => {
@@ -51,37 +52,38 @@ const Register = () => {
     }
   };
 
-  // const submitFormData = async (data) => {
-  //   setIsLoaded(false);
+  const submitFormData = async (data) => {
+    setIsLoaded(false);
 
-  //   const url = "https://club-excel-backend.vercel.app";
-  //   // const url = "http://localhost:8000";
-  //   try {
-  //     const response = await axios.post(`${url}/api/showdown`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       data,
-  //     });
-  //   console.log("✅ Saved to MongoDB + Airtable");
-  //   onOpenModal();
-  //   notifysuccess();
+    // const url = "https://club-excel-backend.vercel.app";
+    // const url = "http://localhost:8000";
+    try {
+      const response = await fetch(`/api/cipherreg`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      });
+      console.log("✅ Saved to MongoDB + Airtable");
+      console.log(await response.json())
+      onOpenModal();
+      notifysuccess();
 
-  //     onOpenModal();
-  //     notifysuccess();
-  //     setData({
-  //       name: "",
-  //       phone: "",
-  //       rollNo: "",
-  //       hostelLocal: "",
-  //       email: "",
-  //     });
-  //   } catch (error) {
-  //     notify(error?.response?.data?.message || "some error occured");
-  //   } finally {
-  //     setIsLoaded(true);
-  //   }
-  // };
+      setData({
+        name: "",
+        phone: "",
+        rollNo: "",
+        hostelLocal: "",
+        email: "",
+      });
+    } catch (error) {
+      console.error("some error occured while sending the response", error)
+      notify(error.message || "some error occured");
+    } finally {
+      setIsLoaded(true);
+    }
+  };
 
   return (
     <>
@@ -103,7 +105,7 @@ const Register = () => {
               Game, Think & Race! Dive into a thrilling non-technical fest where your gaming reflexes, wit, and puzzle-solving instincts will help you top the leaderboard.
 
               <br />
-         
+
               <strong>🔹 Date:</strong> March 1
               <br />
               <strong>🔹 Time:</strong> 10:30 AM - 4:00 PM (as per rounds)
@@ -118,12 +120,12 @@ const Register = () => {
               <strong>Round 2:</strong> Buzzer Battle – Be among the fastest to make the finals!
 
               <br />
-              <strong>Round 3:</strong> The Ultimate Hunt ✨ 
+              <strong>Round 3:</strong> The Ultimate Hunt ✨
 
             </p>
-            <a href="/code-crusade-register" className="font-bold underline">
+            <Link href="/code-crusade-register" className="font-bold underline">
               CODE CRUSADE 4.0
-            </a>
+            </Link>
           </div>
 
           <div className="bg-white text-black p-6 rounded-lg shadow-lg w-full md:w-2/3">
