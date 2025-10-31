@@ -8,7 +8,7 @@ import LoadingBar from "react-top-loading-bar"
 import Loader from "@/components/Common/loder"
 
 // Define the routes that should not have Navbar and Footer
-const noLayoutPages = ["/club-recruitment", "/sankalp", , "/code-crusade-register", "/showdown"]
+const noLayoutPages = ["/club-recruitment", "/sankalp", , "/sankalp-register", "/showdown"]
 
 export default function App({ Component, pageProps }) {
   const [progress, setProgress] = useState(0)

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Michroma&family=Playwrite+AU+QLD:wght@100..400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Michroma&family=Playwrite+AU+QLD:wght@100..400&family=Tektur:wght@400..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -236,7 +238,9 @@ body {
     margin-top: -100px;
   }
 }
-
+.gal-head {
+  font-family: Montserrat;
+}
 #Gallary {
   display: flex;
   flex-direction: column;
@@ -362,3 +366,23 @@ a {
   text-decoration: none;
 }
 
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+.font-michroma {
+  font-family: "Michroma", sans-serif;
+  font-weight: 400;
+}
+
+.font-tektur {
+  font-family: "Tektur", sans-serif;
+}

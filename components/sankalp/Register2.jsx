@@ -5,6 +5,7 @@ import { Modal } from "react-responsive-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Common/loder";
+import Link from "next/link";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -117,9 +118,9 @@ const Register = () => {
               <br />
               <strong>Round 3:</strong> Surprise Round – Expect the unexpected!
             </p>
-            <a href="/code-crusade-register" className="font-bold underline">
+            <Link href="/code-crusade-register" className="font-bold underline">
               CODE CRUSADE
-            </a>
+            </Link>
           </div>
 
           <div className="bg-white text-black p-6 rounded-lg shadow-lg w-full md:w-2/3">

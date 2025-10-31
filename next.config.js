@@ -7,6 +7,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ["raw.githubusercontent.com"],
+  }
 }
 
 module.exports = nextConfig
