@@ -1,10 +1,13 @@
+'use client'
+
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../Common/loder";
+import Loader from "@/components/Common/loder";
+import Link from "next/link";
 const Register = () => {
   const [data, setData] = useState({
     name: "",
@@ -31,13 +34,13 @@ const Register = () => {
     if (data.rollNumber) {
       const sub = data.rollNumber.substring(0, 4);
 
-      if (sub === "2024") {
+      if (sub === "2025") {
         setGroup(["Group 1", "Group 2", "Group 3"]);
-      } else if (sub === "2023") {
+      } else if (sub === "2024") {
         setGroup(["Group 2", "Group 3"]);
       } else if (sub === "2022") {
         setGroup(["Group 3"]);
-      } else if (sub === "2021") {
+      } else if (sub === "2023") {
         setGroup(["Group 3"]);
       }
     } else {
@@ -75,19 +78,25 @@ const Register = () => {
   const submitFormData = async (data) => {
     setIsLoaded(false);
 
-    const url = "https://club-excel-backend.vercel.app";
+    // const url = "https://club-excel-backend.vercel.app";
     // const url = "http://localhost:8000";
     try {
-      const response = await axios.post(`${url}/api/code-crusade-3.0`, {
+      const response = await fetch("/api/codecrusadereg", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        data,
+        body: JSON.stringify(data),
       });
 
-      console.log(response);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Something went wrong");
+      }
+
       onOpenModal();
       notifysuccess();
+
       setData({
         name: "",
         phone: "",
@@ -99,7 +108,8 @@ const Register = () => {
         instituteEmail: "",
       });
     } catch (error) {
-      notify(error.response.data.message || "some error occured");
+      console.error("Error submitting form:", error);
+      notify(error.message || "some error occured");
     } finally {
       setIsLoaded(true);
     }
@@ -114,14 +124,17 @@ const Register = () => {
     }
   };
 
+  if (!isLoaded) {
+    return null;
+  }
   return (
     <>
       <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center bg-black text-white px-6 py-10">
         {/* Header Image */}
         <div className="w-full flex justify-center">
           <img
-            src="/components/Group 16.png"
-            alt="Code Crusade 3.0"
+            src="/components/codecrusade.png"
+            alt="Code Crusade 4.0"
             className="max-w-full md:w-2/3 lg:w-1/2 h-auto mx-auto"
           />
         </div>
@@ -129,7 +142,7 @@ const Register = () => {
         {/* Content Section */}
         <div className="container mx-auto flex flex-col md:flex-row gap-8 mt-10 w-full">
           {/* Left Section - Event Info */}
-          <div className="bg-[#693B14] text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
+          <div className="border border-dashed border-blue-500 shadow-blue-300 text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
             <h2 className="text-xl font-bold text-orange-400">
               Code Crusade – The Ultimate Coding Battle!
             </h2>
@@ -143,9 +156,9 @@ const Register = () => {
                 Group1 is only for 1st year and Group2 is for both 1st and 2nd
                 year and group3 is open for all year
               </div>
-              <span className="font-semibold">🔹 Date:</span> Feb 28
+              <span className="font-semibold">🔹 Date:</span> Nov 6th
               <br />
-              <span className="font-semibold">🔹 Time:</span> 10:30 AM - 4:00 PM
+              <span className="font-semibold">🔹 Time:</span> 10:00 AM - 4:00 PM
               <br />
               <span className="font-semibold">🔹 Venue:</span> Atrium CC
               <br />
@@ -157,9 +170,9 @@ const Register = () => {
               <span className="font-semibold">Round 2:</span> Coding Round –
               Solve challenging problems within the time limit.
             </p>
-            <a href="/showdown" className="font-bold underline">
-              CTRL + WIN showdown
-            </a>
+            <Link href="/cipher-chase-register" className="font-bold underline">
+              Our other event: CIPHERCHASE
+            </Link>
           </div>
 
           {/* Right Section - Registration Form */}
@@ -324,7 +337,7 @@ const Register = () => {
 
               <button
                 type="submit"
-                className="w-full bg-orange-500 text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition-all duration-300 mt-4"
+                className="w-full bg-blue-500 text-white py-3 rounded-lg font-bold hover:bg-blue-300 transition-all duration-300 mt-4"
               >
                 Submit
               </button>
@@ -371,7 +384,7 @@ const Register = () => {
           <div
             className="Link-msg"
             onClick={() =>
-              window.open("https://chat.whatsapp.com/KVsMbjTSbUs2Kqg9Wt45d8 ")
+              window.open("https://chat.whatsapp.com/CaQATAdvxY92GHdOUzyCAo?mode=wwt")
             }
             style={{
               color: "violet",
@@ -400,7 +413,7 @@ const Register = () => {
         pauseOnHover
         theme="dark"
       />
-      {!isLoaded ? <Loader /> : ""}
+      {/* {!isLoaded ? <Loader /> : ""} */}
     </>
   );
 };

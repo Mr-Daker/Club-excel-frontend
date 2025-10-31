@@ -1,4 +1,4 @@
-import Sankalp from '@/components/sankalp/Sankalp'
+import Sankalp from '@/app/sankalp/Sankalp'
 import React from 'react'
 
 const sankalp = () => {

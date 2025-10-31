@@ -7,6 +7,18 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: { unoptimized: true,
+    domains: ['raw.githubusercontent.com'
+    ],
+   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        encoding: false,
+      }
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig

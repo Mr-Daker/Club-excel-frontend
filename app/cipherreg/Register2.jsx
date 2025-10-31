@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../Common/loder";
+import Link from "next/link";
+import Loader from "@/components/Common/loder";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -53,18 +53,18 @@ const Register = () => {
 
   const submitFormData = async (data) => {
     setIsLoaded(false);
-
-    const url = "https://club-excel-backend.vercel.app";
-    // const url = "http://localhost:8000";
     try {
-      const response = await axios.post(`${url}/api/showdown`, {
+      const response = await fetch('/api/cipherreg', {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        data,
+        body: JSON.stringify(data),
       });
+      console.log(await response.json())
       onOpenModal();
       notifysuccess();
+
       setData({
         name: "",
         phone: "",
@@ -74,6 +74,7 @@ const Register = () => {
       });
     } catch (error) {
       notify(error?.response?.data?.message || "some error occured");
+      console.log(error)
     } finally {
       setIsLoaded(true);
     }
@@ -81,45 +82,45 @@ const Register = () => {
 
   return (
     <>
-      <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center bg-black text-white px-6 py-10">
+      <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center bg-black  text-white px-6 py-10">
         <div className="w-full flex justify-center">
           <img
-            src="/components/Group 124.png"
+            src="/ciperchase.png"
             alt="Code Crusade 3.0"
             className="max-w-full md:w-2/3 lg:w-1/2 h-auto mx-auto"
           />
         </div>
 
         <div className="container mx-auto flex flex-col md:flex-row gap-8 mt-10 w-full">
-          <div className="bg-[#693B14] text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
+          <div className="border border-dashed border-blue-500 shadow-blue-300 text-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
             <h2 className="text-xl font-bold text-orange-400">
-              ctrl + win showdown
+              CipherChase : The Ultimate Hunt!
             </h2>
             <p className="mt-2 text-gray-300">
-              Skill, Strategy & Speed! This event is all about testing your
-              reflexes, and ability to think on your feet.
-              Get ready for an electrifying battle of wits!
+              Game, Think & Race! Dive into a thrilling non-technical fest where your gaming reflexes, wit, and puzzle-solving instincts will help you top the leaderboard.
+
               <br />
-         
-              <strong>🔹 Date:</strong> March 1
+
+              <strong>🔹 Date:</strong> Nov 7th
               <br />
-              <strong>🔹 Time:</strong> 10:30 AM - 4:00 PM (as per rounds)
+              <strong>🔹 Time:</strong> 10:00 AM - 4:00 PM (as per rounds)
               <br />
               <strong>🔹 Venue:</strong> ATR 205
               <br />
               <strong>🔹 Rounds:</strong>
               <br />
-              <strong>Round 1:</strong> Two-Player Game – Compete in a
-              fast-paced game to test your skills.
+              <strong>Round 1:</strong> Single-Player Games – Survive and advance!
+
               <br />
-              <strong>Round 2:</strong> Buzzer Quiz – Answer tech-related
-              questions before your opponent.
+              <strong>Round 2:</strong> Buzzer Battle – Be among the fastest to make the finals!
+
               <br />
-              <strong>Round 3:</strong> Surprise Round – Expect the unexpected!
+              <strong>Round 3:</strong> The Ultimate Hunt ✨
+
             </p>
-            <a href="/code-crusade-register" className="font-bold underline">
-              CODE CRUSADE
-            </a>
+            <Link href="/code-crusade-register" className="font-bold underline">
+              Our Other Event: CODE CRUSADE 4.0
+            </Link>
           </div>
 
           <div className="bg-white text-black p-6 rounded-lg shadow-lg w-full md:w-2/3">
@@ -269,7 +270,7 @@ const Register = () => {
           <div
             className="Link-msg"
             onClick={() =>
-              window.open("https://chat.whatsapp.com/LHFaxn2T6OZHBhv1F01edd ")
+              window.open("https://chat.whatsapp.com/IjriArmhgAGIQXtD6EX6Io?mode=wwt")
             }
             style={{
               color: "violet",

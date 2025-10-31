@@ -255,6 +255,14 @@ function Navbar() {
               EVENT
             </div>
           </Link>
+          <Link href="/sankalp">
+            <div
+              className="pointer hover ntxt"
+              onClick={closeMenu}
+            >
+              Sankalp
+            </div>
+          </Link>
 
           <Link href="/team">
             <div
