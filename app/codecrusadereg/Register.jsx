@@ -7,6 +7,7 @@ import { Modal } from "react-responsive-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/Common/loder";
+import Link from "next/link";
 const Register = () => {
   const [data, setData] = useState({
     name: "",
@@ -167,9 +168,9 @@ const Register = () => {
               <span className="font-semibold">Round 2:</span> Coding Round –
               Solve challenging problems within the time limit.
             </p>
-            <a href="/cipher-chase-register" className="font-bold underline">
-              CIPHERCHASE
-            </a>
+            <Link href="/cipher-chase-register" className="font-bold underline">
+              Our other event: CIPHERCHASE
+            </Link>
           </div>
 
           {/* Right Section - Registration Form */}
@@ -381,7 +382,7 @@ const Register = () => {
           <div
             className="Link-msg"
             onClick={() =>
-              window.open("https://chat.whatsapp.com/KVsMbjTSbUs2Kqg9Wt45d8 ")
+              window.open("https://chat.whatsapp.com/CaQATAdvxY92GHdOUzyCAo?mode=wwt")
             }
             style={{
               color: "violet",

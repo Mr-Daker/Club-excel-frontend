@@ -55,17 +55,16 @@ const Register = () => {
     setIsLoaded(false);
     try {
       const response = await fetch('/api/cipherreg', {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body:JSON.stringify(data),
+        body: JSON.stringify(data),
       });
-      console.log(await response.json( ))    
-    onOpenModal();
-    notifysuccess();
-
+      console.log(await response.json())
       onOpenModal();
       notifysuccess();
+
       setData({
         name: "",
         phone: "",
@@ -119,9 +118,9 @@ const Register = () => {
               <strong>Round 3:</strong> The Ultimate Hunt ✨
 
             </p>
-            <a href="/code-crusade-register" className="font-bold underline">
+            <Link href="/code-crusade-register" className="font-bold underline">
               Our Other Event: CODE CRUSADE 4.0
-            </a>
+            </Link>
           </div>
 
           <div className="bg-white text-black p-6 rounded-lg shadow-lg w-full md:w-2/3">
@@ -271,7 +270,7 @@ const Register = () => {
           <div
             className="Link-msg"
             onClick={() =>
-              window.open("https://chat.whatsapp.com/LHFaxn2T6OZHBhv1F01edd ")
+              window.open("https://chat.whatsapp.com/IjriArmhgAGIQXtD6EX6Io?mode=wwt")
             }
             style={{
               color: "violet",
