@@ -83,12 +83,12 @@ const Sankalp2025 = () => {
           whileHover={{ scale: 1.08 }}
           transition={{ duration: 0.6, delay: 1 * 0.2 }}
         >
-          <img src="/components/Short_Logo.jpg" alt="logo" className="w-60 sm:w-40 md:w-40" />
+          <img src="/components/Short_Logo.jpg" alt="logo" className="w-[100%] ml-auto mr-auto " />
         </motion.div>
 
         {/* headline */}
         <motion.h1
-          className="text-center text-5xl md:text-6xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-red-500 to-pink-500"
+          className="text-center text-4xl md:text-4xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-red-500 to-pink-500"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
@@ -160,22 +160,22 @@ const Sankalp2025 = () => {
             className="absolute bottom-6 left-6 text-white md:bottom-10 md:left-10"
             ref={eventSectionRef}
           >
-            <motion.div
+            {/* <motion.div
               className="text-left font-bold leading-none"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="block text-blue-400 text-3xl md:text-4xl tracking-wide font-serif">
+              <span className="block text-blue-400 text-3xl md:text-3xl tracking-wide font-serif">
                 CLUB
               </span>
               <span
-                className="block text-blue-500 text-9xl md:text-7xl  font-bold max-sm:text-6xl font-serif"
+                className="block text-blue-500 text-9xl md:text-3xl  font-bold max-sm:text-6xl font-serif"
                 style={{ letterSpacing: "-1px" }}
               >
                 EXCEL
               </span>
-            </motion.div>
+            </motion.div> */}
 
             {/* <p className="mt-2 max-w-md text-sm text-gray-300 md:text-base">
               Club Excel brings tech and fun to Sankalp 2025! Join us for an

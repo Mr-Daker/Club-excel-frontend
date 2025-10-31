@@ -1,4 +1,3 @@
-"use client"
 import React, { useState } from "react";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
@@ -51,41 +50,39 @@ const Register = () => {
     }
   };
 
-  // const submitFormData = async (data) => {
-  //   setIsLoaded(false);
+  const submitFormData = async (data) => {
+    setIsLoaded(false);
+    try {
+      const response = await fetch('/api/cipherreg', {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body:JSON.stringify(data),
+      });
+      console.log(await response.json( ))    
+    onOpenModal();
+    notifysuccess();
 
-  //   const url = "https://club-excel-backend.vercel.app";
-  //   // const url = "http://localhost:8000";
-  //   try {
-  //     const response = await axios.post(`${url}/api/showdown`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       data,
-  //     });
-  //   console.log("✅ Saved to MongoDB + Airtable");
-  //   onOpenModal();
-  //   notifysuccess();
-
-  //     onOpenModal();
-  //     notifysuccess();
-  //     setData({
-  //       name: "",
-  //       phone: "",
-  //       rollNo: "",
-  //       hostelLocal: "",
-  //       email: "",
-  //     });
-  //   } catch (error) {
-  //     notify(error?.response?.data?.message || "some error occured");
-  //   } finally {
-  //     setIsLoaded(true);
-  //   }
-  // };
+      onOpenModal();
+      notifysuccess();
+      setData({
+        name: "",
+        phone: "",
+        rollNo: "",
+        hostelLocal: "",
+        email: "",
+      });
+    } catch (error) {
+      notify(error?.response?.data?.message || "some error occured");
+      console.log(error)
+    } finally {
+      setIsLoaded(true);
+    }
+  };
 
   return (
     <>
-      <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center  text-white px-6 py-10">
+      <div className="min-h-screen w-screen overflow-hidden flex flex-col items-center bg-black  text-white px-6 py-10">
         <div className="w-full flex justify-center">
           <img
             src="/ciperchase.png"
@@ -122,7 +119,7 @@ const Register = () => {
 
             </p>
             <a href="/code-crusade-register" className="font-bold underline">
-              CODE CRUSADE 4.0
+              Our Other Event: CODE CRUSADE 4.0
             </a>
           </div>
 
