@@ -376,7 +376,7 @@ a {
 }
 
 .animate-spin-slow {
-  animation: spin-slow 10s linear infinite;
+  animation: spin-slow 15s linear infinite;
 }
 .font-michroma {
   font-family: "Michroma", sans-serif;
@@ -385,4 +385,20 @@ a {
 
 .font-tektur {
   font-family: "Tektur", sans-serif;
+}
+@keyframes rotate-globe {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+.animate-rotate-globe {
+  transform-style: preserve-3d;
+  animation: rotate-globe 10s linear infinite;
+}
+.select-notAllowed {
+  user-select: none;
+  -webkit-user-drag: none;
 }

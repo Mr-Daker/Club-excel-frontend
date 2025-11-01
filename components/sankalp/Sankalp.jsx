@@ -72,7 +72,6 @@ const EventHero = () => {
         </div>
 
         <div className="text-center px-4 w-full z-10 relative max-sm:flex max-sm:flex-col max-sm:justify-between max-sm:h-full max-sm:py-20">
-          {/* Club Excel Logo - Shows on top for mobile only */}
           <div className="hidden max-sm:flex max-sm:justify-center max-sm:items-end max-sm:order-1 ">
             <Image
               src="/components/clublogo.gif"
@@ -83,7 +82,6 @@ const EventHero = () => {
             />
           </div>
 
-          {/* Main Content */}
           <div className="max-sm:order-2 max-sm:flex-1 max-sm:flex max-sm:flex-col max-sm:justify-center">
             <p className="text-lg md:text-xl font-semibold text-orange-500 mb-3 uppercase tracking-widest font-michroma max-sm:text-base">
               Club Excel Presents
@@ -104,18 +102,25 @@ const EventHero = () => {
             </p>
           </div>
 
-          {/* Sankalp Logo - Shows on bottom for mobile only */}
           <div className="hidden max-sm:flex max-sm:justify-center max-sm:items-center max-sm:order-3">
-            <Image
-              src="/event/sankalp2025.png"
-              alt="sankalp Logo"
-              width={100}
-              height={100}
-              className="w-28 h-28 animate-spin-slow max-sm:w-36 max-sm:h-36"
-            />
+            <div className="flex items-center justify-center">
+              <Image
+                src="/event/sankalpLogoOuter.png"
+                alt="sankalp Logo"
+                width={100}
+                height={100}
+                className="w-32 h-32 animate-spin-slow select-notAllowed"
+              />
+              <Image
+                src="/event/sankalpLogoInner.png"
+                alt="sankalp Logo"
+                width={100}
+                height={100}
+                className="w-16 h-16 animate-spin absolute select-notAllowed  [animation-duration:8s]"
+              />
+            </div>
           </div>
 
-          {/* Both Logos Side by Side - Shows for bigger devices only */}
           <div className="w-full flex gap-2 items-center justify-center pt-5 max-sm:hidden">
             <Image
               src="/components/clublogo.gif"
@@ -124,25 +129,32 @@ const EventHero = () => {
               height={100}
               className="w-22 sm:w-24 md:w-32 lg:w-40"
             />
-            <Image
-              src="/event/sankalp2025.png"
-              alt="sankalp Logo"
-              width={100}
-              height={100}
-              className="w-22 sm:w-24 md:w-32 lg:w-40 animate-spin-slow"
-            />
+            <div className="flex items-center justify-center select-notAllowed">
+              <Image
+                src="/event/sankalpLogoOuter.png"
+                alt="sankalp Logo"
+                width={100}
+                height={100}
+                className="w-22 sm:w-24 md:w-32 lg:w-40 animate-spin-slow select-notAllowed "
+              />
+              <Image
+                src="/event/sankalpLogoInner.png"
+                alt="sankalp Logo"
+                width={100}
+                height={100}
+                className="w-11 sm:w-12 md:w-16 lg:w-20 animate-spin absolute [animation-duration:8s] select-notAllowed"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Events Section */}
       <section className="relative py-20 px-6 max-w-7xl mx-auto overflow-hidden">
-        {/* Background Blur Effects */}
         <div className="absolute top-20 left-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
 
         <div className="relative z-10">
-          {/* Section Header */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-6 py-2 bg-orange-600/20 border border-orange-500/30 rounded-full mb-4">
               <Sparkles className="w-5 h-5 text-orange-500" />
@@ -162,10 +174,8 @@ const EventHero = () => {
           <div className="space-y-12">
             {upcomingEvents.map((event, index) => (
               <div key={event.id} className="group relative">
-                {/* Glassmorphism Card Container */}
                 <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 hover:border-white/20 hover:shadow-orange-500/10">
                   <div className="relative flex flex-col lg:flex-row">
-                    {/* Image Section - Better proportions for large screens */}
                     <div className="w-full lg:w-96 xl:w-[420px] relative bg-gradient-to-br from-gray-900 to-gray-950 flex items-center justify-center p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-white/10">
                       <div className="relative w-full h-64 sm:h-80 lg:h-96">
                         <Image
@@ -176,7 +186,6 @@ const EventHero = () => {
                         />
                       </div>
 
-                      {/* Category Badge */}
                       <div className="absolute top-6 right-6 px-4 py-2 bg-orange-600/90 backdrop-blur-sm rounded-full">
                         <span className="text-white font-bold text-xs uppercase tracking-wider gal-head">
                           {event.category}
@@ -184,9 +193,7 @@ const EventHero = () => {
                       </div>
                     </div>
 
-                    {/* Content Section */}
                     <div className="flex-1 p-8 lg:p-10 flex flex-col justify-between">
-                      {/* Title & Description */}
                       <div className="mb-6">
                         <h3 className="text-3xl lg:text-4xl xl:text-5xl font-extrabold text-white mb-3 gal-head gal-head">
                           {event.title}
@@ -197,7 +204,6 @@ const EventHero = () => {
                         </p>
                       </div>
 
-                      {/* Event Details Grid */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
                         <div className="flex items-start gap-3">
                           <div className="p-2 bg-orange-600/20 rounded-lg">
@@ -249,7 +255,6 @@ const EventHero = () => {
                         </div>
                       </div>
 
-                      {/* Rules Section */}
                       <div className="mb-6 p-6 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm rounded-2xl border border-white/10">
                         <h4 className="text-xl font-bold mb-4 text-orange-500 font-michroma flex items-center gap-2">
                           <span className="w-1 h-6 bg-orange-500 rounded-full"></span>
@@ -270,7 +275,6 @@ const EventHero = () => {
                         </ul>
                       </div>
 
-                      {/* Register Button */}
                       <Link href={event.reg}>
                         <button className="w-full py-4 bg-white text-gray-900 font-bold rounded-full hover:bg-gray-200 transition-all duration-300 flex items-center justify-center gap-2 text-base font-michroma shadow-lg hover:shadow-xl group/btn">
                           <span>Register Now</span>
@@ -281,7 +285,6 @@ const EventHero = () => {
                   </div>
                 </div>
 
-                {/* Decorative Line Between Cards */}
                 {index < upcomingEvents.length - 1 && (
                   <div className="flex items-center justify-center my-12">
                     <div className="h-px w-24 bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
