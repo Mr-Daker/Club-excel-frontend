@@ -2,7 +2,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  z-index: 0;
+  z-index: 5;
 }
 
 .smokeLayer {
@@ -13,12 +13,12 @@
   left: -25%;
   background: radial-gradient(
       circle at 30% 30%,
-      rgba(180, 180, 180, 0.08),
+      rgba(179, 57, 30, 0.08),
       transparent 70%
     ),
     radial-gradient(
       circle at 70% 40%,
-      rgba(120, 120, 120, 0.06),
+      rgba(140, 137, 137, 0.123),
       transparent 70%
     ),
     radial-gradient(
@@ -29,14 +29,95 @@
   filter: blur(80px);
   mix-blend-mode: lighten;
   opacity: 0.55;
+  animation: smokeFlow 20s ease-in-out infinite;
+}
+
+.smokeLayer:nth-child(1) {
+  animation: smokeFlow 20s ease-in-out infinite;
 }
 
 .smokeLayer:nth-child(2) {
   transform: scale(1.9) rotate(30deg);
   opacity: 0.8;
+  animation: smokeFlow2 25s ease-in-out infinite;
+  animation-delay: -15s;
 }
 
 .smokeLayer:nth-child(3) {
   transform: scale(1.4) rotate(-20deg);
   opacity: 0.15;
+  animation: smokeFlow3 50s ease-in-out infinite;
+  animation-delay: -25s;
+}
+
+@keyframes smokeFlow {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.15;
+  }
+  20% {
+    transform: translate(5%, -8%) rotate(3deg) scale(1.05);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-3%, -15%) rotate(-2deg) scale(1.08);
+    opacity: 0.9;
+  }
+  70% {
+    transform: translate(8%, -10%) rotate(4deg) scale(1.03);
+    opacity: 1;
+  }
+  90% {
+    transform: translate(-5%, -20%) rotate(2deg) scale(1.06);
+    opacity: 0.3;
+  }
+}
+
+@keyframes smokeFlow2 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(30deg) scale(1.9);
+    opacity: 0.2;
+  }
+  20% {
+    transform: translate(-8%, -12%) rotate(35deg) scale(1.95);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(5%, -18%) rotate(28deg) scale(2);
+    opacity: 0.95;
+  }
+  70% {
+    transform: translate(-6%, -8%) rotate(33deg) scale(1.92);
+    opacity: 1;
+  }
+  90% {
+    transform: translate(4%, -15%) rotate(30deg) scale(1.88);
+    opacity: 0.25;
+  }
+}
+
+@keyframes smokeFlow3 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(-20deg) scale(1.4);
+    opacity: 0.1;
+  }
+  20% {
+    transform: translate(6%, -10%) rotate(-25deg) scale(1.45);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(-7%, -20%) rotate(-18deg) scale(1.48);
+    opacity: 0.5;
+  }
+  70% {
+    transform: translate(4%, -15%) rotate(-23deg) scale(1.42);
+    opacity: 0.8;
+  }
+  90% {
+    transform: translate(-3%, -22%) rotate(-20deg) scale(1.46);
+    opacity: 0.1;
+  }
 }

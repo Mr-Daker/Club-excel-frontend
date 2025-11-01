@@ -65,7 +65,7 @@ const EventHero = () => {
         id="hero"
         className="relative h-screen bg-black overflow-hidden text-white flex items-center justify-center"
       >
-        <div className={styles.smokeOverlay}>
+        <div className={`${styles.smokeOverlay}`}>
           <div className={styles.smokeLayer}></div>
           <div className={styles.smokeLayer}></div>
           <div className={styles.smokeLayer}></div>
