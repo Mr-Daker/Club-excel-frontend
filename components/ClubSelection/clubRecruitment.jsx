@@ -690,7 +690,7 @@ const ClubRecruitment = () => {
             </p>
 
             <a
-              href="https://chat.whatsapp.com/JfN0JNdgHHE1HfWJ4OZYhh?mode=ac_t"
+              href="https://chat.whatsapp.com/DTXBIuAIyiDAmobZY5XYpX"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/25"
