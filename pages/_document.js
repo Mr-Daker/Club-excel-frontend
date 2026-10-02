@@ -43,6 +43,10 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&family=Crimson+Text:ital,wght@1,700&family=IBM+Plex+Sans&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Caveat:wght@600;700&display=swap"
+          rel="stylesheet"
+        ></link>
       </Head>
       <body>
         <Main />
