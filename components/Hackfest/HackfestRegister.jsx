@@ -23,7 +23,7 @@ const EMAIL_RULE = /^\S+@\S+\.\S+$/;
 const CONFETTI_COLORS = ["#FFE45E", "#FF90E8", "#8BE9FD", "#B9FF3C", "#FF6B35"];
 
 const TICKER =
-  "HACKTOBERFEST 2026 ★ TEAM REGISTRATION ★ NIST BERHAMPUR ★ ONE TEAM LEADER PER ENTRY ★ UP TO THREE ADDITIONAL MEMBERS ★ ";
+  "HACKFEST 2026 ★ TEAM REGISTRATION ★ NIST BERHAMPUR ★ ONE TEAM LEADER PER ENTRY ★ UP TO THREE ADDITIONAL MEMBERS ★ ";
 
 const emptyMember = () => ({ name: "", email: "", phone: "" });
 
@@ -61,7 +61,7 @@ const validate = (form) => {
   return errors;
 };
 
-const HacktoberfestRegister = () => {
+const HackfestRegister = () => {
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
   const [shakeField, setShakeField] = useState("");
@@ -183,7 +183,7 @@ const HacktoberfestRegister = () => {
 
     setIsSubmitting(true);
     try {
-      await axios.post("/api/hacktoberfestreg", {
+      await axios.post("/api/hackfestreg", {
         teamLeader: { ...form.leader },
         members: form.members.map((member) => ({ ...member })),
         projectDescription: form.projectDescription,
@@ -209,10 +209,10 @@ const HacktoberfestRegister = () => {
   return (
     <>
       <Head>
-        <title>Team Registration — Hacktoberfest 2026 — Club Excel</title>
+        <title>Team Registration — Hackfest 2026 — Club Excel</title>
         <meta
           name="description"
-          content="Register your Hacktoberfest team with Club Excel. One team leader, up to three members, one project."
+          content="Register your Hackfest team with Club Excel. One team leader, up to three members, one project."
         />
         <link rel="icon" href="/clubexcellogo.png" />
       </Head>
@@ -240,13 +240,13 @@ const HacktoberfestRegister = () => {
             <span className="ct-brand-text">
               <span className="ct-brand-a">Club Excel</span>
               <span className="ct-brand-x">&times;</span>
-              <span className="ct-brand-b">Hacktoberfest 2026</span>
+              <span className="ct-brand-b">Hackfest 2026</span>
             </span>
           </div>
 
           <div className="ct-top-row">
             <div className="ct-tag">NIST / Berhampur / Odisha</div>
-            <div className="ct-tag">Hacktoberfest — 2026</div>
+            <div className="ct-tag">Hackfest — 2026</div>
             <div className="ct-tag dark">Registrations open</div>
             <button
               type="button"
@@ -576,7 +576,7 @@ const HacktoberfestRegister = () => {
 
         <footer className="ct-foot">
           <span>Club Excel — NIST Berhampur</span>
-          <span>Hacktoberfest 2026</span>
+          <span>Hackfest 2026</span>
         </footer>
       </div>
 
@@ -1444,4 +1444,4 @@ const HacktoberfestRegister = () => {
   );
 };
 
-export default HacktoberfestRegister;
+export default HackfestRegister;

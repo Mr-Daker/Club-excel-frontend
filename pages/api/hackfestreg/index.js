@@ -1,5 +1,5 @@
 import connectDB from '@/lib/mongodb';
-import HacktoberfestTeam from '@/models/HacktoberfestTeam';
+import HackfestTeam from '@/models/HackfestTeam';
 
 const EMAIL_RULE = /^\S+@\S+\.\S+$/;
 const MAX_MEMBERS = 3;
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
       }))
       .filter((member) => member.name || member.email || member.phone);
 
-    const existing = await HacktoberfestTeam.findOne({
+    const existing = await HackfestTeam.findOne({
       $or: [
         { 'teamLeader.email': leader.email },
         { 'teamLeader.rollNo': leader.rollNo },
@@ -79,7 +79,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const registration = await HacktoberfestTeam.create({
+    const registration = await HackfestTeam.create({
       teamLeader: leader,
       members: cleanedMembers,
       projectDescription: description,
@@ -102,7 +102,7 @@ export default async function handler(req, res) {
       });
     }
 
-    console.error('Hacktoberfest registration error:', error);
+    console.error('Hackfest registration error:', error);
     return res.status(500).json({
       error: 'Internal server error. Please try again later.',
     });

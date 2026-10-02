@@ -5,7 +5,7 @@ module.exports = {
     // "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/sankalp/*.{js,jsx}",
     "./components/ClubSelection/*.{js,jsx}",
-    "./components/Hacktoberfest/*.{js,jsx}",
+    "./components/Hackfest/*.{js,jsx}",
     // Or if using `src` directory:
     // "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
