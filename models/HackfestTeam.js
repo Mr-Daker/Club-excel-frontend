@@ -59,7 +59,7 @@ const leaderSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const HacktoberfestTeamSchema = new mongoose.Schema(
+const HackfestTeamSchema = new mongoose.Schema(
   {
     teamLeader: {
       type: leaderSchema,
@@ -82,8 +82,8 @@ const HacktoberfestTeamSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-HacktoberfestTeamSchema.index({ 'teamLeader.email': 1 }, { unique: true });
-HacktoberfestTeamSchema.index({ 'teamLeader.rollNo': 1 }, { unique: true });
+HackfestTeamSchema.index({ 'teamLeader.email': 1 }, { unique: true });
+HackfestTeamSchema.index({ 'teamLeader.rollNo': 1 }, { unique: true });
 
-export default mongoose.models.HacktoberfestTeam ||
-  mongoose.model('HacktoberfestTeam', HacktoberfestTeamSchema);
+export default mongoose.models.HackfestTeam ||
+  mongoose.model('HackfestTeam', HackfestTeamSchema);
