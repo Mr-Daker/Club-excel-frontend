@@ -1,707 +1,287 @@
-"use client";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useRef, useState } from "react";
 import {
-  X,
-  Users,
-  Trophy,
-  Zap,
-  ChevronDown,
-  Star,
-  Code,
-  Award,
+  ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Check, CheckCircle2,
+  ChevronDown, Code2, Compass, Fingerprint, Loader2, Plus, Search, Sparkles, Users,
 } from "lucide-react";
+import MemberPass from "./MemberPass";
+import { initialFormData, formSteps, validateStep, submitRegistration, checkRegistration } from "./recruitmentForm";
+import styles from "@/styles/Recruitment.module.css";
 
-const ClubRecruitment = () => {
-  const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    rollNo: "",
-    regNo: "",
-    nistEmail: "",
-    personalEmail: "",
-    gender: "",
-    branch: "",
-    hackerrankId: "",
-    techStacks: "",
-    mobile: "",
-    hostelLocal: "",
-    reason: "",
-  });
+const stepDetails = [
+  { label: "About you", title: "First, a little about you.", description: "Every great connection starts with a hello." },
+  { label: "Campus", title: "Your corner of campus.", description: "A few details to help us put a name to a face." },
+  { label: "Interests", title: "What makes you curious?", description: "Tell us what you enjoy and what you want to explore." },
+];
 
-  const [scrollingDown, setScrollingDown] = useState(false);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [checkingStatus, setCheckingStatus] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [rollNo, setRollNo] = useState("");
-
-  const checkStatusRef = useRef(null);
-
-  const notify = (message) => toast.error(message);
-  const successNotify = (message) => toast.success(message);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScroll =
-        window.scrollY || document.documentElement.scrollTop;
-      if (currentScroll > lastScrollTop) {
-        setScrollingDown(true);
-      } else {
-        setScrollingDown(false);
-      }
-      setLastScrollTop(currentScroll <= 0 ? 0 : currentScroll);
-    };
-
-    const handleClickOutside = (event) => {
-      if (
-        checkStatusRef.current &&
-        !checkStatusRef.current.contains(event.target)
-      ) {
-        setIsFormVisible(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [lastScrollTop]);
-
-  const handleCheckStatusClick = () => {
-    setIsFormVisible((prev) => !prev);
-  };
-
-  const handleRollNoChange = (e) => {
-    setRollNo(e.target.value);
-  };
-
-  const handleCheckStatus = async (e) => {
-    setCheckingStatus(true);
-    e.preventDefault();
-    try {
-      const link = "https://club-excel-backend.vercel.app";
-      // const link = "http://localhost:8000";
-      const res = await axios.get(`${link}/api/getuser/${rollNo}`);
-      console.log(res);
-      if (res.status === 200) {
-        successNotify("User found, already registered!");
-        setRollNo("");
-        setIsFormVisible(false);
-      }
-      setCheckingStatus(false);
-    } catch (error) {
-      notify("User not found. Please register!");
-      setCheckingStatus(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    setIsRegistering(true);
-    e.preventDefault();
-    if (!formData.nistEmail.includes("nist.edu")) {
-      notify("Enter a valid NIST email address.");
-      return;
-    }
-    console.log(formData);
-    const API_ENDPOINT = "https://club-excel-backend.vercel.app/api/register";
-    // const API_ENDPOINT = "http://localhost:8000/api/register";
-
-    try {
-      const res = await axios.post(API_ENDPOINT, formData);
-
-      if (res.status === 201) {
-        setOpen(true);
-        successNotify("Registration successful!");
-        setFormData({
-          name: "",
-          rollNo: "",
-          regNo: "",
-          nistEmail: "",
-          personalEmail: "",
-          gender: "",
-          branch: "",
-          hackerrankId: "",
-          techStacks: "",
-          mobile: "",
-          hostelLocal: "",
-          reason: "",
-        });
-      }
-      setIsRegistering(false);
-    } catch (error) {
-      if (error.response) {
-        console.error("Registration error:", error.response.data);
-        notify(
-          error.response.data.message ||
-            "Registration failed. Please try again."
-        );
-      } else if (error.request) {
-        console.error("Network error:", error.request);
-        notify("Network error. Please check your connection and try again.");
-      } else {
-        console.error("Unexpected error:", error.message);
-        notify("An unexpected error occurred.");
-      }
-    }
-    setIsRegistering(false);
-  };
-
-  const onCloseModal = () => setOpen(false);
-
-  return (
-    <div className="min-h-screen bg-[#020202] relative overflow-hidden font-sans text-white">
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-
-      <div
-        className={`fixed w-full h-12 z-[9999] flex justify-center items-center px-4 transition-all duration-300 ${
-          scrollingDown ? "-top-20" : "top-2"
-        }`}
-      >
-        <div className="relative flex items-center justify-center p-2 rounded-full bg-gray-950/70 backdrop-blur-xl border border-gray-800 shadow-lg">
-          <Link
-            href="/"
-            className="px-6 py-2 text-sm md:text-base font-bold uppercase text-gray-300 hover:text-white transition-colors"
-          >
-            Home
-          </Link>
-          <div className="w-px h-6 bg-gray-700"></div>
-          <div className="relative" ref={checkStatusRef}>
-            <span
-              onClick={handleCheckStatusClick}
-              className="check-status-link px-6 py-2 text-sm md:text-base font-bold uppercase text-gray-300 hover:text-white transition-colors cursor-pointer"
-            >
-              Check Status
-            </span>
-            {isFormVisible && (
-              <div className="absolute top-12 left-1/2 -translate-x-1/2 p-6 bg-gray-900 rounded-xl shadow-lg border border-gray-800 w-64">
-                <form onSubmit={handleCheckStatus} className="flex flex-col">
-                  <label
-                    htmlFor="rollNo"
-                    className="mb-2 text-sm font-medium text-gray-300"
-                  >
-                    Roll No:
-                  </label>
-                  <input
-                    type="text"
-                    id="rollNo"
-                    value={rollNo}
-                    onChange={handleRollNoChange}
-                    required
-                    className="mb-4 p-3 bg-gray-800 border border-gray-700 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    placeholder="Enter your roll no."
-                  />
-                  <button
-                    type="submit"
-                    disabled={checkingStatus}
-                    className="py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-lg text-sm hover:from-blue-700 hover:to-purple-700 transition-colors"
-                  >
-                    {checkingStatus ? "checking..." : "check"}
-                  </button>
-                </form>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <div className="relative min-h-screen flex flex-col justify-center items-center px-4 overflow-hidden text-center">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#020202] via-[#06060A] to-[#020202]"></div>
-          <div className="absolute top-20 left-10 w-96 h-96 bg-blue-900/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute top-40 right-10 w-80 h-80 bg-indigo-900/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-purple-900/5 rounded-full blur-3xl animate-pulse delay-2000"></div>
-          <div className="absolute inset-0 opacity-[0.03]">
-            <div
-              className="w-full h-full"
-              style={{
-                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
-                backgroundSize: "30px 30px",
-              }}
-            ></div>
-          </div>
-        </div>
-
-        <div className="z-10 mb-20 relative pt-20">
-          <p className="text-xl md:text-2xl font-light text-gray-400 mb-2 tracking-wide">
-            STEP INTO THE WORLD OF
-          </p>
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-6 tracking-tight animate-pulse-slow">
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
-              CLUB EXCEL
-            </span>
-          </h1>
-          <p className="text-xl md:text-3xl text-gray-500 font-light tracking-wider">
-            DARE TO MATCH THE PACE OF EXCELITES
-          </p>
-        </div>
-
-        {/* Achievement Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl px-4 mb-20 z-10">
-          <div className="group bg-gray-950/50 backdrop-blur-xl rounded-2xl p-6 text-center border border-gray-800 hover:border-blue-500 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10">
-            <div className="mb-4">
-              <Star className="w-10 h-10 text-blue-400 mx-auto group-hover:animate-pulse" />
-            </div>
-            <div className="text-3xl md:text-4xl font-black text-blue-400 mb-2 group-hover:text-blue-300 transition-colors">
-              95%+
-            </div>
-            <div className="text-white font-bold text-lg mb-1">PLACEMENT</div>
-            <div className="text-gray-500 text-sm">
-              Top-tier companies worldwide
-            </div>
-          </div>
-          <div className="group bg-gray-950/50 backdrop-blur-xl rounded-2xl p-6 text-center border border-gray-800 hover:border-purple-500 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/10">
-            <div className="mb-4">
-              <Award className="w-10 h-10 text-purple-400 mx-auto group-hover:animate-pulse" />
-            </div>
-            <div className="text-3xl md:text-4xl font-black text-purple-400 mb-2 group-hover:text-purple-300 transition-colors">
-              40 LPA
-            </div>
-            <div className="text-white font-bold text-lg mb-1">
-              HIGHEST PACKAGE
-            </div>
-            <div className="text-gray-500 text-sm">
-              Industry-leading salaries
-            </div>
-          </div>
-          <div className="group bg-gray-950/50 backdrop-blur-xl rounded-2xl p-6 text-center border border-gray-800 hover:border-cyan-500 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/10">
-            <div className="mb-4">
-              <Code className="w-10 h-10 text-cyan-400 mx-auto group-hover:animate-pulse" />
-            </div>
-            <div className="text-3xl md:text-4xl font-black text-cyan-400 mb-2 group-hover:text-cyan-300 transition-colors">
-              MULTI
-            </div>
-            <div className="text-white font-bold text-lg mb-1">DOMAIN CLUB</div>
-            <div className="text-gray-500 text-sm">
-              Comprehensive tech expertise
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
-          <ChevronDown className="w-10 h-10 text-gray-600" />
-        </div>
-      </div>
-
-      <div className="py-24 px-4 bg-gray-950 relative">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
-              Our Latest{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
-                Achievements
-              </span>
-            </h2>
-            <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* Placement Achievements */}
-            <div className="bg-gray-900/70 backdrop-blur-xl rounded-3xl p-10 border border-gray-800 hover:border-yellow-500 transition-all duration-500 group">
-              <div className="flex items-center mb-8">
-                <div className="bg-yellow-500/20 p-3 rounded-xl mr-4 group-hover:bg-yellow-500/30 transition-colors">
-                  <Trophy className="w-10 h-10 text-yellow-400" />
-                </div>
-                <h3 className="text-3xl font-black text-white">
-                  Placement Excellence
-                </h3>
-              </div>
-              <p className="text-gray-400 mb-8 leading-relaxed text-lg">
-                Our seniors have achieved remarkable placement in top companies
-                like JP Morgan, Zomato, Walmart, Amazon, Deloitte, HP, and
-                Juspay, with incredible packages that set industry benchmarks.
-              </p>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center bg-gray-900 rounded-xl p-4 border border-gray-800">
-                  <span className="text-white font-semibold text-lg">
-                    Average Package
-                  </span>
-                  <span className="text-blue-400 font-black text-xl">
-                    15+ LPA
-                  </span>
-                </div>
-                <div className="flex justify-between items-center bg-gray-900 rounded-xl p-4 border border-gray-800">
-                  <span className="text-white font-semibold text-lg">
-                    Highest Package
-                  </span>
-                  <span className="text-purple-400 font-black text-xl">
-                    40 LPA
-                  </span>
-                </div>
-                <div className="flex justify-between items-center bg-gray-900 rounded-xl p-4 border border-gray-800">
-                  <span className="text-white font-semibold text-lg">
-                    Top Recruiters
-                  </span>
-                  <span className="text-cyan-400 font-black text-xl">
-                    FAANG & More
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Hackathon Achievements */}
-            <div className="bg-gray-900/70 backdrop-blur-xl rounded-3xl p-10 border border-gray-800 hover:border-blue-500 transition-all duration-500 group">
-              <div className="flex items-center mb-8">
-                <div className="bg-blue-500/20 p-3 rounded-xl mr-4 group-hover:bg-blue-500/30 transition-colors">
-                  <Zap className="w-10 h-10 text-blue-400" />
-                </div>
-                <h3 className="text-3xl font-black text-white">
-                  Hackathon Champions
-                </h3>
-              </div>
-              <div className="space-y-6">
-                <div className="border-l-4 border-yellow-400 pl-6 py-2 bg-gray-900/50 rounded-r-lg">
-                  <h4 className="text-white font-bold text-lg">
-                    🏆 SIH 2023 Winner
-                  </h4>
-                  <p className="text-gray-400">Gaurav and his team</p>
-                </div>
-                <div className="border-l-4 border-yellow-400 pl-6 py-2 bg-gray-900/50 rounded-r-lg">
-                  <h4 className="text-white font-bold text-lg">
-                    🏆 SIH 2023 Finalist
-                  </h4>
-                  <p className="text-gray-400">
-                    Sudip, Rudransh and their team
-                  </p>
-                </div>
-                <div className="border-l-4 border-blue-400 pl-6 py-2 bg-gray-900/50 rounded-r-lg">
-                  <h4 className="text-white font-bold text-lg">
-                    🚀 Google Solution Challenge Finalist
-                  </h4>
-                  <p className="text-gray-400">Payal and her team</p>
-                </div>
-                <div className="border-l-4 border-purple-400 pl-6 py-2 bg-gray-900/50 rounded-r-lg">
-                  <h4 className="text-white font-bold text-lg">
-                    ⭐ SIH 2024 Finalist
-                  </h4>
-                  <p className="text-gray-400">Sruti and her team</p>
-                </div>
-                <div className="border-l-4 border-indigo-400 pl-6 py-2 bg-gray-900/50 rounded-r-lg">
-                  <h4 className="text-white font-bold text-lg">
-                    ⚡ IEEE Hack-Arena Finalist
-                  </h4>
-                  <p className="text-gray-400">Sujata and her team</p>
-                </div>
-                <div className="border-l-4 border-green-400 pl-6 py-2 bg-gray-900/50 rounded-r-lg">
-                  <h4 className="text-white font-bold text-lg">
-                    🎯 ULIP Logistic Hackathon Finalist
-                  </h4>
-                  <p className="text-gray-400">Payal and her team</p>
-                </div>
-                <div className="border-l-4 border-red-400 pl-6 py-2 bg-gray-900/50 rounded-r-lg">
-                  <h4 className="text-white font-bold text-lg">
-                    🚀 ODOO Hackathon Finalist
-                  </h4>
-                  <p className="text-gray-400">Gaurav and his team</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Registration Form */}
-      <div className="py-24 px-4 bg-[#020202] relative">
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
-              Join{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
-                Club Excel
-              </span>
-            </h2>
-            <p className="text-2xl text-gray-400 font-light">
-              Begin your transformation into an elite developer
-            </p>
-            <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-6"></div>
-          </div>
-
-          <div className="bg-gray-900/70 backdrop-blur-2xl rounded-3xl p-12 md:p-16 border border-gray-800 shadow-2xl">
-            <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Form Fields */}
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Roll No *
-                  </label>
-                  <input
-                    type="text"
-                    name="rollNo"
-                    value={formData.rollNo}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="Enter your roll number"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Registration No *
-                  </label>
-                  <input
-                    type="text"
-                    name="regNo"
-                    value={formData.regNo}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="Enter your registration number"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    NIST Email *
-                  </label>
-                  <input
-                    type="email"
-                    name="nistEmail"
-                    value={formData.nistEmail}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="your.name@nist.edu"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Personal Email *
-                  </label>
-                  <input
-                    type="email"
-                    name="personalEmail"
-                    value={formData.personalEmail}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="your.personal@email.com"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Gender *
-                  </label>
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  >
-                    <option
-                      value=""
-                      disabled
-                      className="bg-gray-800 text-white"
-                    >
-                      Select gender
-                    </option>
-                    <option value="male" className="bg-gray-800 text-white">
-                      Male
-                    </option>
-                    <option value="female" className="bg-gray-800 text-white">
-                      Female
-                    </option>
-                    <option value="other" className="bg-gray-800 text-white">
-                      Other
-                    </option>
-                  </select>
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Branch *
-                  </label>
-                  <input
-                    type="text"
-                    name="branch"
-                    value={formData.branch}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="e.g., Computer Science"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    HackerRank ID *
-                  </label>
-                  <input
-                    type="text"
-                    name="hackerrankId"
-                    value={formData.hackerrankId}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="Your HackerRank username"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Tech Stacks/Skills *
-                  </label>
-                  <input
-                    type="text"
-                    name="techStacks"
-                    value={formData.techStacks}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="e.g., React, Python, Machine Learning"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Phone Number *
-                  </label>
-                  <input
-                    type="tel"
-                    name="mobile"
-                    value={formData.mobile}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    placeholder="Your mobile number"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-white font-bold text-lg">
-                    Accommodation *
-                  </label>
-                  <select
-                    name="hostelLocal"
-                    value={formData.hostelLocal}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  >
-                    <option value="" disabled>
-                      Select accommodation
-                    </option>
-                    <option
-                      value="hostelite"
-                      className="bg-gray-800 text-white"
-                    >
-                      Hostelite
-                    </option>
-                    <option value="localite" className="bg-gray-800 text-white">
-                      Localite
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Reason */}
-              <div className="mt-8 space-y-3">
-                <label className="block text-white font-bold text-lg">
-                  Why do you want to join Club Excel? *
-                </label>
-                <textarea
-                  name="reason"
-                  value={formData.reason}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-vertical"
-                  placeholder="Tell us about your passion for technology, your goals, and what you hope to achieve with Club Excel..."
-                />
-              </div>
-
-              {/* Submit Button */}
-              <div className="mt-12 text-center">
-                <button
-                  type="submit"
-                  disabled={isRegistering}
-                  className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 hover:from-blue-700 hover:via-purple-700 hover:to-cyan-700 text-white font-black text-xl px-16 py-5 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 border border-blue-500/20"
-                >
-                  {isRegistering ? "Registering..." : "Register Now"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-gray-950 py-5 text-center border-t border-gray-800">
-        <p className="text-gray-500 text-lg">
-          ©Club Excel - ALL RIGHTS RESERVED
-        </p>
-      </footer>
-
-      {/* Success Modal */}
-      {open && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-950 border border-gray-800 rounded-3xl p-10 max-w-lg w-full backdrop-blur-xl relative shadow-2xl text-center">
-            <button
-              onClick={onCloseModal}
-              className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
-            >
-              <X className="w-8 h-8" />
-            </button>
-
-            <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/25">
-              <Users className="w-10 h-10 text-white" />
-            </div>
-
-            <h3 className="text-3xl font-black text-white mb-4">
-              Registration Successful!
-            </h3>
-
-            <p className="text-gray-400 mb-8 leading-relaxed text-lg">
-              Thank you for completing your registration for Club Excel! We
-              invite you to join our WhatsApp group to receive additional
-              information and stay updated on upcoming events and activities.
-            </p>
-
-            <a
-              href="https://chat.whatsapp.com/C9EOSiqiSwKK5Kb5gvIEwy?s=sw&p=a&ilr=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/25"
-            >
-              Join WhatsApp Group
-            </a>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+const fields = {
+  name: { label: "Full name", placeholder: "Your full name", autoComplete: "name", wide: true },
+  nistEmail: { label: "NIST email", placeholder: "you@nist.edu", type: "email", autoComplete: "email", wide: true },
+  personalEmail: { label: "Personal email", placeholder: "you@example.com", type: "email", autoComplete: "email" },
+  mobile: { label: "Mobile number", placeholder: "10-digit number", type: "tel", autoComplete: "tel" },
+  rollNo: { label: "Roll number", placeholder: "Your college roll number" },
+  regNo: { label: "Registration number", placeholder: "Your registration number" },
+  branch: { label: "Branch", placeholder: "e.g. Computer Science", wide: true },
+  gender: { label: "Gender", options: [["male", "Male"], ["female", "Female"], ["other", "Other"]], placeholder: "Select gender" },
+  hostelLocal: { label: "Accommodation", options: [["hostelite", "Hostelite"], ["localite", "Localite"]], placeholder: "Select accommodation" },
+  hackerrankId: { label: "HackerRank username", placeholder: "Your HackerRank username", wide: true, autoCapitalize: "none" },
+  techStacks: { label: "Your skills & interests", placeholder: "e.g. Python, design, web development", wide: true },
+  reason: { label: "Why would you like to join?", placeholder: "An idea you want to build. Something you want to learn. Tell us your story…", wide: true, textarea: true },
 };
 
-export default ClubRecruitment;
+const benefits = [
+  { icon: Code2, number: "01", title: "Make ideas real.", text: "Explore new tools, build projects, and put your curiosity to work." },
+  { icon: Users, number: "02", title: "Find your people.", text: "Share the late-night breakthroughs with a community that gets it." },
+  { icon: Compass, number: "03", title: "Go a little further.", text: "Learn with peers and mentors. Take on challenges, together." },
+];
+
+function Field({ name, value, error, onChange }) {
+  const field = fields[name];
+  const id = `recruitment-${name}`;
+  const props = {
+    id, name, value, onChange, required: true,
+    "aria-invalid": Boolean(error), "aria-describedby": error ? `${id}-error` : undefined,
+    autoComplete: field.autoComplete || "off",
+  };
+  return (
+    <div className={`${styles.field} ${field.wide ? styles.wideField : ""}`}>
+      <label htmlFor={id}>{field.label}<span aria-hidden="true">*</span></label>
+      {field.options ? (
+        <div className={styles.selectWrap}>
+          <select {...props}>
+            <option value="" disabled>{field.placeholder}</option>
+            {field.options.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+          </select>
+          <ChevronDown size={14} aria-hidden="true" />
+        </div>
+      ) : field.textarea ? (
+        <textarea {...props} rows={3} placeholder={field.placeholder} />
+      ) : (
+        <input {...props} type={field.type || "text"} placeholder={field.placeholder} autoCapitalize={field.autoCapitalize} />
+      )}
+      {error && <p className={styles.fieldError} id={`${id}-error`}>{error}</p>}
+    </div>
+  );
+}
+
+export default function ClubRecruitment() {
+  const [formData, setFormData] = useState({ ...initialFormData });
+  const [step, setStep] = useState(0);
+  const [mode, setMode] = useState("apply");
+  const [errors, setErrors] = useState({});
+  const [requestError, setRequestError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [registered, setRegistered] = useState(false);
+  const [rollNo, setRollNo] = useState("");
+  const [lookup, setLookup] = useState(null);
+  const [isChecking, setIsChecking] = useState(false);
+  const [focusRequest, setFocusRequest] = useState(null);
+  const requestInFlight = useRef(false);
+  const busy = isSubmitting || isChecking;
+
+  useEffect(() => {
+    if (focusRequest) document.getElementById(focusRequest.id)?.focus();
+  }, [focusRequest]);
+
+  function focus(id) { setFocusRequest({ id }); }
+
+  function changeMode(nextMode) {
+    if (busy) return;
+    setMode(nextMode);
+    setRequestError("");
+  }
+
+  function changeField(event) {
+    const { name, value } = event.target;
+    setFormData((previous) => ({ ...previous, [name]: value }));
+    setErrors((previous) => ({ ...previous, [name]: undefined }));
+    setRequestError("");
+  }
+
+  function goToStep(index) {
+    setStep(index);
+    setErrors({});
+    setRequestError("");
+    focus("application-step-title");
+  }
+
+  function showFieldErrors(nextErrors, stepIndex) {
+    setStep(stepIndex);
+    setErrors(nextErrors);
+    focus(`recruitment-${Object.keys(nextErrors)[0]}`);
+  }
+
+  async function handleApplication(event) {
+    event.preventDefault();
+    if (requestInFlight.current) return;
+    const stepErrors = validateStep(step, formData);
+    if (Object.keys(stepErrors).length) {
+      showFieldErrors(stepErrors, step);
+      return;
+    }
+    if (step < stepDetails.length - 1) {
+      goToStep(step + 1);
+      return;
+    }
+    for (let index = 0; index < formSteps.length; index += 1) {
+      const validation = validateStep(index, formData);
+      if (Object.keys(validation).length) {
+        showFieldErrors(validation, index);
+        return;
+      }
+    }
+    requestInFlight.current = true;
+    setIsSubmitting(true);
+    setRequestError("");
+    try {
+      await submitRegistration(formData);
+      setRegistered(true);
+      setFormData({ ...initialFormData });
+      focus("registration-success");
+    } catch (error) {
+      setRequestError(error.message || "We couldn't submit your application. Please try again.");
+    } finally {
+      requestInFlight.current = false;
+      setIsSubmitting(false);
+    }
+  }
+
+  async function handleLookup(event) {
+    event.preventDefault();
+    if (requestInFlight.current) return;
+    if (!rollNo.trim()) {
+      setLookup({ type: "error", invalid: true, text: "Enter your roll number to check your registration." });
+      focus("registration-lookup");
+      return;
+    }
+    requestInFlight.current = true;
+    setIsChecking(true);
+    setLookup(null);
+    try {
+      const result = await checkRegistration(rollNo);
+      setLookup(result.found
+        ? { type: "success", text: "You're registered. We found an application for this roll number. This confirms registration, not selection." }
+        : { type: "empty", text: "No registration found for this roll number. Check the number or start your application." });
+    } catch (error) {
+      setLookup({ type: "error", text: error.message || "We couldn't check your registration. Please try again." });
+    } finally {
+      requestInFlight.current = false;
+      setIsChecking(false);
+    }
+  }
+
+  function handleTabKey(event) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key) || busy) return;
+    event.preventDefault();
+    const next = event.key === "Home" ? "apply" : event.key === "End" ? "check" : mode === "apply" ? "check" : "apply";
+    changeMode(next);
+    focus(`${next}-tab`);
+  }
+
+  return (
+    <main className={styles.page}>
+      <div className={styles.ambient} aria-hidden="true" />
+      <div className={styles.container}>
+        <div className={styles.topline}>
+          <span><span className={styles.dot} />THE NEXT CHAPTER / CLUB EXCEL</span>
+          <span>NIST · BERHAMPUR <ArrowUpRight size={12} aria-hidden="true" /></span>
+        </div>
+        <div className={styles.mainGrid}>
+          <section className={styles.intro} aria-labelledby="recruitment-title">
+            <p className={styles.eyebrow}><span>COME AS YOU ARE.</span> GROW WITH US.</p>
+            <h1 id="recruitment-title">A place for<br /><span>curious minds.</span><Sparkles aria-hidden="true" className={styles.titleSpark} strokeWidth={1.2} /></h1>
+            <p className={styles.introDescription}>The next big idea starts with a little curiosity.<br className={styles.desktopBreak} /> Bring yours. Let’s build something together.</p>
+            <a className={styles.mobileApply} href="#application">Start your application <ArrowDown size={16} aria-hidden="true" /></a>
+            <MemberPass />
+            <div className={styles.introBottom}>
+              <span className={styles.peopleMark} aria-hidden="true"><Users size={17} strokeWidth={1.3} /></span>
+              <p>A little ambition. A lot of possibility.<br /><Link href="/team">Meet the people behind Excel <ArrowUpRight size={13} aria-hidden="true" /></Link></p>
+            </div>
+          </section>
+
+          <section className={styles.applicationCard} id="application" aria-label="Club Excel application">
+            <div className={styles.cardTabs} role="tablist" aria-label="Application options" onKeyDown={handleTabKey}>
+              <button id="apply-tab" type="button" role="tab" aria-selected={mode === "apply"} aria-controls="application-panel" tabIndex={mode === "apply" ? 0 : -1} onClick={() => changeMode("apply")} disabled={busy}>Apply to join <ArrowUpRight size={14} aria-hidden="true" /></button>
+              <button id="check-tab" type="button" role="tab" aria-selected={mode === "check"} aria-controls="application-panel" tabIndex={mode === "check" ? 0 : -1} onClick={() => changeMode("check")} disabled={busy}>Check registration</button>
+            </div>
+            {mode === "apply" ? (
+              <div className={styles.cardBody} id="application-panel" role="tabpanel" aria-labelledby="apply-tab">
+                {registered ? (
+                  <div className={styles.successState}>
+                    <div className={styles.successIcon}><Check size={30} aria-hidden="true" /></div>
+                    <p className={styles.eyebrow}>APPLICATION RECEIVED</p>
+                    <h2 id="registration-success" tabIndex={-1}>Your next chapter<br /><span>is in motion.</span></h2>
+                    <p>You’re registered! Join the recruitment WhatsApp group to stay connected with the club.</p>
+                    <a className={styles.primaryButton} href="https://chat.whatsapp.com/C9EOSiqiSwKK5Kb5gvIEwy?s=sw&p=a&ilr=0" target="_blank" rel="noopener noreferrer">Join the WhatsApp group <ArrowUpRight size={17} aria-hidden="true" /></a>
+                    <p className={styles.smallNote}>Registration is the first step and does not confirm selection.</p>
+                    <Link href="/team" className={styles.textLink}>Meet the collective <ArrowRight size={15} aria-hidden="true" /></Link>
+                  </div>
+                ) : (
+                  <>
+                    <ol className={styles.stepper} aria-label="Application progress">
+                      {stepDetails.map((detail, index) => (
+                        <li key={detail.label} className={index <= step ? styles.activeStep : ""}>
+                          <button type="button" onClick={() => goToStep(index)} disabled={index >= step || busy} aria-current={index === step ? "step" : undefined} aria-label={`${detail.label}${index < step ? ", completed. Go back to edit" : ""}`}>
+                            <span>{index < step ? <Check size={12} aria-hidden="true" /> : `0${index + 1}`}</span>{detail.label}
+                          </button>
+                        </li>
+                      ))}
+                    </ol>
+                    <div className={styles.formHeading}>
+                      <span className={styles.stepCaption}>STEP 0{step + 1} / 03</span>
+                      <h2 id="application-step-title" tabIndex={-1}>{stepDetails[step].title}</h2>
+                      <p>{stepDetails[step].description}</p>
+                    </div>
+                    <form onSubmit={handleApplication} noValidate aria-labelledby="application-step-title" aria-busy={isSubmitting}>
+                      <fieldset disabled={isSubmitting} className={styles.fieldGrid}>
+                        <legend className={styles.srOnly}>{stepDetails[step].label} — all fields are required</legend>
+                        {formSteps[step].map((name) => <Field key={name} name={name} value={formData[name]} error={errors[name]} onChange={changeField} />)}
+                      </fieldset>
+                      {requestError && <p className={styles.requestError} role="alert">{requestError}</p>}
+                      <div className={styles.formActions}>
+                        {step > 0 && <button type="button" className={styles.backButton} onClick={() => goToStep(step - 1)} disabled={isSubmitting}><ArrowLeft size={15} aria-hidden="true" /> Back</button>}
+                        <button type="submit" className={styles.primaryButton} disabled={isSubmitting}>
+                          {isSubmitting ? <>Submitting <Loader2 size={17} className={styles.spinner} aria-hidden="true" /></> : <>{step === 2 ? "Submit application" : "Continue"}<ArrowRight size={17} aria-hidden="true" /></>}
+                        </button>
+                      </div>
+                      <p className={styles.formNote}><Fingerprint size={14} aria-hidden="true" />{step === 2 ? "Take a moment to review your details before submitting." : "All fields are required. Make yourself known."}</p>
+                    </form>
+                  </>
+                )}
+              </div>
+            ) : (
+              <div className={`${styles.cardBody} ${styles.lookupPanel}`} id="application-panel" role="tabpanel" aria-labelledby="check-tab">
+                <div className={styles.lookupIcon}><Search size={26} strokeWidth={1.3} aria-hidden="true" /></div>
+                <p className={styles.stepCaption}>ALREADY APPLIED?</p>
+                <h2>Pick up where<br /><span>you left off.</span></h2>
+                <p className={styles.lookupDescription}>Enter your college roll number to see whether your registration has been received.</p>
+                <form onSubmit={handleLookup} noValidate aria-busy={isChecking}>
+                  <div className={styles.field}>
+                    <label htmlFor="registration-lookup">Roll number <span aria-hidden="true">*</span></label>
+                    <input id="registration-lookup" name="lookupRollNo" value={rollNo} onChange={(event) => { setRollNo(event.target.value); setLookup(null); }} placeholder="Your college roll number" required disabled={isChecking} aria-describedby={lookup ? "lookup-result" : undefined} aria-invalid={Boolean(lookup?.invalid)} />
+                  </div>
+                  <button type="submit" className={styles.primaryButton} disabled={isChecking}>{isChecking ? "Checking registration" : "Check registration"}{isChecking ? <Loader2 size={17} className={styles.spinner} aria-hidden="true" /> : <ArrowRight size={17} aria-hidden="true" />}</button>
+                  {lookup && <div id="lookup-result" className={`${styles.lookupResult} ${lookup.type === "success" ? styles.lookupSuccess : ""}`} role={lookup.type === "error" ? "alert" : "status"}>{lookup.type === "success" && <CheckCircle2 size={19} aria-hidden="true" />}<p>{lookup.text}</p></div>}
+                </form>
+                <div className={styles.lookupFooter}><span>Haven’t applied yet?</span><button type="button" disabled={isChecking} onClick={() => { changeMode("apply"); focus(registered ? "registration-success" : "application-step-title"); }}>Start your application <ArrowUpRight size={14} aria-hidden="true" /></button></div>
+              </div>
+            )}
+          </section>
+        </div>
+
+        <section className={styles.beyond} aria-labelledby="beyond-title">
+          <div className={styles.sectionHeading}><p className={styles.eyebrow}>MORE THAN A CLUB</p><h2 id="beyond-title">Good things happen<br /><span>when we build together.</span></h2><Link href="/event">Life at Excel <ArrowUpRight size={16} aria-hidden="true" /></Link></div>
+          <div className={styles.benefitGrid}>{benefits.map(({ icon: Icon, number, title, text }) => <article key={number} className={styles.benefit}><div><Icon size={23} strokeWidth={1.2} aria-hidden="true" /><span>{number}</span></div><h3>{title}</h3><p>{text}</p></article>)}</div>
+        </section>
+        <section className={styles.questions} aria-labelledby="questions-title">
+          <div><p className={styles.eyebrow}>BEFORE YOU JUMP IN</p><h2 id="questions-title">A little clarity.</h2><p>Something else on your mind?<br /><Link href="/contact">Let’s talk <ArrowUpRight size={13} aria-hidden="true" /></Link></p></div>
+          <div className={styles.accordions}>
+            <details><summary>What should I have ready?<Plus size={18} aria-hidden="true" /></summary><p>Keep your NIST email, college roll and registration numbers, contact details, and HackerRank username handy. You’ll also tell us about your skills and why you’d like to join.</p></details>
+            <details><summary>Can I edit my answers before submitting?<Plus size={18} aria-hidden="true" /></summary><p>Yes. Use Back or a completed step to review your answers. Your entries stay in the form while you move between steps or check your registration. Refreshing the page clears an unfinished application.</p></details>
+            <details><summary>What happens after I apply?<Plus size={18} aria-hidden="true" /></summary><p>Once your registration is confirmed, you’ll get a link to the recruitment WhatsApp group. You can also use Check registration with your roll number to confirm your application was received. Registration does not confirm selection.</p></details>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}

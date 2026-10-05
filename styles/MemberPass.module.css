@@ -1,0 +1,272 @@
+.artwork {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 250px;
+  isolation: isolate;
+  pointer-events: none;
+  perspective: 1000px;
+  container-type: inline-size;
+  container-name: member-pass;
+}
+
+.artwork::before {
+  content: "";
+  position: absolute;
+  inset: 25% 10% 12%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(166, 141, 218, .12), transparent 66%);
+  filter: blur(15px);
+}
+
+.orbits {
+  position: absolute;
+  width: 111%;
+  height: 100%;
+  top: 0;
+  left: -5.5%;
+  overflow: visible;
+  stroke: rgba(187, 168, 236, .18);
+  stroke-width: .7;
+}
+
+.orbits ellipse + ellipse {
+  stroke: rgba(187, 168, 236, .09);
+  stroke-dasharray: 3 6;
+}
+
+.orbitPoint {
+  fill: #b8d7ce;
+  stroke: none;
+}
+
+.orbitPointMuted {
+  fill: #b9a8d4;
+  stroke: none;
+}
+
+.cardShadow {
+  position: absolute;
+  width: 70%;
+  height: 35px;
+  left: 15%;
+  bottom: 17px;
+  border-radius: 50%;
+  background: rgba(5, 3, 12, .46);
+  filter: blur(17px);
+  transform: rotate(-5deg);
+}
+
+.pass {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: 82%;
+  max-width: 354px;
+  aspect-ratio: 1.69;
+  padding: 20px 22px 16px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(226, 215, 251, .42);
+  border-radius: 15px;
+  background:
+    linear-gradient(112deg, rgba(237, 228, 255, .16), transparent 25%, rgba(237, 228, 255, .015) 47%, rgba(177, 166, 204, .16) 68%, transparent 88%),
+    linear-gradient(140deg, #51425e 0%, #30283f 27%, #292337 64%, #423c51 100%);
+  box-shadow:
+    0 2px 0 #918397,
+    0 4px 0 #28222f,
+    0 19px 28px rgba(4, 2, 12, .27),
+    inset 0 1px 0 rgba(255, 255, 255, .14),
+    inset 0 -1px 0 rgba(210, 220, 235, .12);
+  transform: translate(-50%, -50%) rotate(-9deg) rotateY(-9deg) rotateX(5deg);
+  animation: passFloat 8s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.pass::before {
+  content: "";
+  position: absolute;
+  width: 34%;
+  height: 200%;
+  top: -40%;
+  left: 11%;
+  background: linear-gradient(90deg, transparent, rgba(230, 223, 251, .065), transparent);
+  transform: rotate(-31deg);
+  pointer-events: none;
+}
+
+.innerFrame {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(218, 206, 237, .12);
+  border-radius: 9px;
+  pointer-events: none;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.brand {
+  color: #ece7f4;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: 1.5px;
+}
+
+.brand > span {
+  display: block;
+  margin-top: 5px;
+  color: #b6a9c5;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 5px;
+  font-weight: 400;
+  letter-spacing: 1.35px;
+}
+
+.edition {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #b8abc9;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 7px;
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+
+.edition > span {
+  color: #cde1d8;
+  font-size: 17px;
+  line-height: .8;
+}
+
+.cardBody {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 0;
+  padding-top: 3px;
+}
+
+.message {
+  color: #e7ddef;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: clamp(19px, 2.1vw, 27px);
+  font-weight: 500;
+  letter-spacing: -.85px;
+  line-height: 1.12;
+}
+
+.mark {
+  width: 96px;
+  height: 96px;
+  margin: -2px -4px 0 0;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 7px rgba(7, 4, 16, .22));
+}
+
+.footer {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(200, 184, 215, .18);
+  color: #b1a3be;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 5.6px;
+  line-height: 1.7;
+  letter-spacing: 1.1px;
+}
+
+.signal {
+  display: flex;
+  align-items: stretch;
+  gap: 3px;
+  height: 15px;
+  padding-bottom: 2px;
+}
+
+.signal > i {
+  width: 1px;
+  background: #d1c5df;
+  opacity: .5;
+}
+
+.signal > i:nth-child(3n) {
+  width: 3px;
+  opacity: .28;
+}
+
+.signal > i:nth-child(4n) {
+  width: 2px;
+  background: #c5e7dc;
+  opacity: .6;
+}
+
+.cornerLabel {
+  position: absolute;
+  right: 6%;
+  bottom: 7px;
+  color: #83758f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 7px;
+  letter-spacing: 1.8px;
+}
+
+@keyframes passFloat {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-9deg) rotateY(-9deg) rotateX(5deg); }
+  50% { transform: translate(-50%, calc(-50% - 5px)) rotate(-7deg) rotateY(-7deg) rotateX(3deg); }
+}
+
+@media (max-width: 600px) {
+  .artwork { height: 238px; }
+  .message { font-size: 25px; }
+}
+
+@media (max-width: 370px) {
+  .artwork { height: 211px; }
+  .pass { padding: 17px 16px 13px; }
+  .brand { font-size: 10px; }
+  .brand > span { font-size: 4px; letter-spacing: 1px; }
+  .edition { font-size: 6px; gap: 5px; }
+  .message { font-size: 21px; }
+  .mark { width: 75px; height: 75px; }
+  .footer { padding-top: 6px; font-size: 4.4px; letter-spacing: .8px; }
+  .signal { height: 12px; gap: 2px; }
+}
+
+@container member-pass (max-width: 390px) {
+  .pass { padding: 17px 18px 13px; }
+  .brand { font-size: 11px; }
+  .brand > span { font-size: 4.5px; letter-spacing: 1px; }
+  .message { font-size: 23px; }
+  .mark { width: 78px; height: 78px; }
+  .footer { font-size: 5px; padding-top: 7px; }
+}
+
+@container member-pass (max-width: 320px) {
+  .pass { padding: 12px 14px 10px; }
+  .innerFrame { inset: 5px; }
+  .brand { font-size: 9px; letter-spacing: 1px; }
+  .brand > span { margin-top: 3px; font-size: 3.6px; }
+  .edition { font-size: 5px; gap: 4px; }
+  .edition > span { font-size: 13px; }
+  .message { font-size: 18px; letter-spacing: -.6px; }
+  .mark { width: 60px; height: 60px; }
+  .footer { font-size: 4px; padding-top: 5px; letter-spacing: .65px; }
+  .signal { height: 10px; gap: 2px; }
+  .cornerLabel { font-size: 6px; letter-spacing: 1.2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pass { animation: none; }
+}

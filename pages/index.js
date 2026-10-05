@@ -1,7 +1,7 @@
 import Head from "next/head"
 
 import { Inter } from "next/font/google"
-import { styled } from "styled-components"
+import styled from "styled-components"
 import Intro from "@/components/Intro/intro"
 import About from "@/components/About/about"
 import dynamic from "next/dynamic"
