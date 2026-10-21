@@ -8,7 +8,7 @@ import LoadingBar from "react-top-loading-bar"
 import Loader from "@/components/Common/loder"
 
 // Define the routes that should not have Navbar and Footer
-const noLayoutPages = ["/club-recruitment", "/sankalp", , "/sankalp-register", "/showdown", "/hacktoberfest-register"]
+const noLayoutPages = ["/sankalp", "/sankalp-register", "/showdown", "/hacktoberfest-register"]
 
 export default function App({ Component, pageProps }) {
   const [progress, setProgress] = useState(0)
@@ -43,7 +43,7 @@ export default function App({ Component, pageProps }) {
     }, 5000)
   }, [])
 
-  const isNoLayoutPage = noLayoutPages.includes(router.pathname)
+  const isNoLayoutPage = Component.standaloneLayout || noLayoutPages.includes(router.pathname)
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function App({ Component, pageProps }) {
         waitingTime={400}
         onLoaderFinished={() => setProgress(0)}
       />
-      {!loaded ? <Loader /> : ""}
+      {!loaded && !Component.skipIntro ? <Loader /> : ""}
 
       {!isNoLayoutPage && <Navbar />}
       <Component {...pageProps} />

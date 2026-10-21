@@ -1,75 +1,93 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
+import LeftHero from "./leftHero"
 import RightHero from "./rightHero"
-import { motion } from "framer-motion"
-import dynamic from "next/dynamic"
-const NoSSR = dynamic(() => import("./leftHero"), { ssr: false })
-import { useInView } from "react-intersection-observer"
 
-const MainCont = styled.div`
-  @media (min-width: 801px) and (max-width: 1300px) {
-    transform: scale(0.6);
+const HeroSection = styled.section`
+  position: relative;
+  z-index: 10;
+  isolation: isolate;
+  width: 100%;
+  max-width: 1424px;
+  margin: 0 auto;
+  padding: 18px 52px 48px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    inset: 5% 0 0 30%;
+    background: radial-gradient(ellipse at 60% 45%, rgba(89, 63, 178, 0.13), transparent 67%);
   }
-  .center-ref {
-    margin-top: -120px;
-    height: 600px;
-    position: relative;
-    @media (max-width: 800px) {
-      margin-left: -300px;
 
-      margin-top: -1000px;
-      height: 200px;
-      width: 800px;
+  .excel-hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+    align-items: center;
+    gap: 14px;
+    min-height: 550px;
+  }
+
+  .excel-hero-copy,
+  .excel-hero-object {
+    min-width: 0;
+  }
+
+  .excel-hero-copy {
+    padding: 24px 0 32px 24px;
+  }
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    padding: 22px 32px 48px;
+
+    .excel-hero-layout {
+      min-height: 560px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 4px;
+    }
+
+    .excel-hero-copy {
+      padding-left: 0;
     }
   }
-  .Hero-div {
-    @media (max-width: 800px) {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+
+  @media (max-width: 800px) {
+    padding: 48px 22px 32px;
+
+    .excel-hero-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .excel-hero-copy {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .excel-hero-object {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
     }
   }
 `
 
 function Hero() {
-  const [animate, setAnimate] = useState(false)
-  const [ref, inView] = useInView()
-  useEffect(() => {
-    if (inView) {
-      setAnimate(true)
-    } else {
-      setAnimate(false)
-    }
-  }, [inView])
   return (
-    <MainCont>
-      <div className="Hero-div">
-        <motion.div
-          transition={{ duration: 1 }}
-          animate={{
-            opacity: animate ? 1 : 0,
-            transform: animate ? "translateX(0px)" : "translateX(-300px)",
-          }}
-        >
-          <NoSSR />
-        </motion.div>
-
-        <motion.div
-          transition={{ duration: 1 }}
-          animate={{
-            opacity: animate ? 1 : 0,
-            transform: animate ? "translateX(0px)" : "translateX(300px)",
-          }}
-        >
+    <HeroSection aria-labelledby="excel-hero-heading">
+      <div className="excel-hero-layout">
+        <div className="excel-hero-copy">
+          <LeftHero />
+        </div>
+        <div className="excel-hero-object">
           <RightHero />
-        </motion.div>
-
-        <div
-          ref={ref}
-          className="center-ref"
-        ></div>
+        </div>
       </div>
-    </MainCont>
+    </HeroSection>
   )
 }
 
